@@ -1,0 +1,56 @@
+#header {
+  position: fixed;
+  background-color: black;
+  width: 100%;
+  background: solid;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+  border-bottom: 3px solid;
+  height: 60px;
+  margin-top: -10px;
+}
+
+#header h1 {
+  color: white;
+  font-family: 'Arial Narrow', Arial, sans-serif;
+}
+
+#lamps {
+  position: absolute;
+  top: 50px;
+}
+
+.lamp {
+  border-left: 1px dashed #aaa;
+  border-bottom : 1px dashed #aaa;
+  cursor: pointer;
+}
+
+.gift {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  /*display: none;*/
+}
+
+
+#information {
+  position: absolute;
+  top:50px;
+  right:0px;
+  height: 100%;
+  width: 50%;
+  /*border: 60px;*/
+}
+
+#information .content {
+  padding: 20%;
+}
+
+#information img {
+  width: 50%;
+  cursor: pointer;
+}

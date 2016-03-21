@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    //- title Studio Simon Lamps
+    script(src='/libs/jquery.js')
+    script(src='/libs/jquery.randomize.js')
+
+    script(src='/libs/packery.js')
+    link(rel='stylesheet', href='/style/main.css')
+
+    script(src='/libs/three.min.js')
+    script(src='/libs/OBJLoader.js')
+
+    script(src='/model.js')
+    script(src='/main.js')
+
+
+  body
+    #header
+      h1 Simon Lamps
+
+    #lamps
+      for lamp in ['desk1', 'desk2', 'desk3', 'desk4', 'desk5']
+        .lamp.desk(data-name=lamp)
+      for lamp in ['wall1', 'wall2', 'wall3', 'wall4', 'wall5']
+        .lamp.wall(data-name=lamp)
+
+
+    #information
+      .content
+        h1 Lamp Name
+        h2 price: $300
+        img.buy(src='imgs/gift.ico')
