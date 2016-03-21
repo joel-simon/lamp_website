@@ -1,7 +1,7 @@
 express = require 'express'
 app = express()
 coffeeMiddleware = require 'coffee-middleware'
-
+fs = require 'fs'
 app.set 'views', __dirname+'/views'
 app.set 'view engine', 'jade'
 app.use express.static(__dirname+'/public')
@@ -15,21 +15,17 @@ app.use coffeeMiddleware {
   bare: true
 }
 
-lamps = (num for num in [1..10])
+lamp_imgs = null
+
+fs.readdir 'public/imgs/lamps', (err, files) ->
+  lamp_imgs = files
 
 app.get '/', (req, res) ->
-  res.render 'index.jade', { lamps }
+  res.render 'index.jade', { lamp_imgs }
 
 # catch 404 and forward to error handler
 app.get '*', (req, res, next) ->
   res.redirect '/'
-
-# app.use (err, req, res, next) ->
-#   res.status err.status || 500
-#   res.render 'error', {
-#     message: err.message,
-#     error: {}
-#   }
 
 server = app.listen 3000, ()->
   host = server.address().address

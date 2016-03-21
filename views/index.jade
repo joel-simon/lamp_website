@@ -25,6 +25,9 @@ html
       for lamp in ['wall1', 'wall2', 'wall3', 'wall4', 'wall5']
         .lamp.wall(data-name=lamp)
 
+      for image_path in lamp_imgs
+        img.lamp(src='imgs/lamps/'+image_path)
+
 
     #information
       .content

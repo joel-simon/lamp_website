@@ -3,18 +3,17 @@ $ ->
   $('.lamp.wall').width(300).height(600)
   $('.lamp.desk').width(300).height 300
 
-  # console.log $('#lamps')
   $('#lamps').randomize('.lamp')
-  # console.log $('#lamps')
 
   $('#lamps').packery {
     itemSelector: '.lamp'
     gutter: 0
-    # columnWidth: 100
-    # containerStyle: {
-    #   top: 60
-    # }
   }
+
+  $( 'img.lamp' ).hide()
+  # $('img').load () ->
+  #   $('#lamps').packery()
+
   $('.lamp').each () ->
     if $(@).hasClass 'wall'
       initModel $(@), "obj/#{$(@).data('name')}", 'obj/box_wall'
@@ -27,8 +26,9 @@ $ ->
       $('.lamp.open').removeClass 'open'
       $('.lamp').show()
       $('.lamp').children().trigger 'mouseout'
-      $('#lamps').packery()
 
+      $( 'img.lamp' ).hide()
+      $('#lamps').packery()
       $('#information').hide()
       event.preventDefault()
 

@@ -71,8 +71,9 @@ sceneReady = ($container, model, box, state, scene, renderer, camera) ->
     # $parent.height '100%'
     $parent.addClass 'open'
     $('.lamp').not($parent).hide()
-    $('#lamps').packery()
 
+    $( 'img.lamp' ).show()
+    $('#lamps').packery()
     $('#information').show()
     showBox()
     event.stopPropagation()
