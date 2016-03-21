@@ -19,7 +19,7 @@ class window.ModelViewer
     @camera.lookAt @scene.position
 
     # RENDERER
-    @renderer = new THREE.WebGLRenderer( {alpha: true, antialias: true })
+    @renderer = new THREE.WebGLRenderer { preserveDrawingBuffer: true, alpha: true, antialias: true }
     @renderer.setPixelRatio window.devicePixelRatio
     @renderer.setSize @width, @height
     @renderer.setClearColor 0xffffff, 0
@@ -50,7 +50,7 @@ class window.ModelViewer
     @camera.updateProjectionMatrix()
 
   animate: () =>
-    requestAnimationFrame @animate
+    @animateId = requestAnimationFrame @animate
     @renderer.render @scene, @camera
     @update()
 
@@ -94,3 +94,10 @@ class window.ModelViewer
   reset: () ->
     @rotation.y = @default_rotation.y
     @rotation.z = @default_rotation.z
+
+  toImage: () ->
+    image = @renderer.domElement.toDataURL("image/png").replace "image/png", "image/octet-stream"
+    # @$parent.find('img').attr 'src', @renderer.domElement.toDataURL()
+    # cancelAnimationFrame @animateId
+    # @$container.remove()
+    image
