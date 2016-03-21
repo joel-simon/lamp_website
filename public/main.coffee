@@ -41,16 +41,10 @@ $ ->
       # hideBox() unless $parent.hasClass 'open'
       $lamp.css
         'z-index': 0
-#     state.rotation.z = 0
-#     state.fromRight = false
-#     # box.visible = false
+      
       { percX, percY } = perc_div event, $lamp
-      if percX > .5
-        viewer.turned = true
-        viewer.rotation.y = Math.PI
-      else
-        viewer.rotation.y = 0
-      viewer.rotation.z = 0
+      viewer.default_rotation.y = if percX > .5 then Math.PI else 0
+      viewer.reset()
 
 
     $lamp.click (event) ->

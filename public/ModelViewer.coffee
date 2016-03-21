@@ -1,10 +1,9 @@
 class window.ModelViewer
   constructor: (@$parent, @modelPath, @boxPath, callback) ->
     @active = false
-    @turned = false
-    @fromRight = false
     @scale = 10
-    @rotation = { z:0, y:0 }
+    @default_rotation = { z:0, y:0 }
+    @rotation = { z: @default_rotation.z, y: @default_rotation.y }
 
     @width = @$parent.width()
     @height = @$parent.height()
@@ -91,3 +90,7 @@ class window.ModelViewer
           mesh._minEdges = edges
 
       callback object
+
+  reset: () ->
+    @rotation.y = @default_rotation.y
+    @rotation.z = @default_rotation.z
