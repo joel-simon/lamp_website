@@ -1,25 +1,69 @@
+perc_div = (event, $) ->
+  offset = $.offset()
+  relX = event.pageX - offset.left
+  relY = event.pageY - offset.top
+
+  percX = relX / $.width()
+  percY = relY / $.height()
+  return { percX, percY }
+
 $ ->
-
-  $('.lamp.wall').width(300).height(600)
-  $('.lamp.desk').width(300).height 300
-
-  # console.log $('#lamps')
+  # Randomize order of lamps.
   $('#lamps').randomize('.lamp')
-  # console.log $('#lamps')
 
-  $('#lamps').packery {
+  # Set dimensions.
+  $('.lamp.wall').width(300).height 600
+  $('.lamp.desk').width(300).height 300
+  
+  # Create packery instance.
+  $('#lamps').packery
     itemSelector: '.lamp'
     gutter: 0
-    # columnWidth: 100
-    # containerStyle: {
-    #   top: 60
-    # }
-  }
+
   $('.lamp').each () ->
-    if $(@).hasClass 'wall'
-      initModel $(@), "obj/#{$(@).data('name')}", 'obj/box_wall'
-    else if $(@).hasClass 'desk'
-      initModel $(@), "obj/#{$(@).data('name')}", 'obj/box_desk'
+    $lamp = $(@)
+    box_path = if $lamp.hasClass 'desk' then 'obj/box_desk' else 'obj/box_wall'
+    base_path = "obj/#{$lamp.data('name')}"
+    viewer = new ModelViewer $lamp, base_path, box_path, (() ->)
+
+    $lamp.mousemove ( event ) ->
+      { percX, percY } = perc_div event, $lamp
+      viewer.rotation.y = (percX)* Math.PI
+      viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
+
+    $lamp.mouseenter ( event ) ->
+      # showBox()
+      $lamp.css
+        'z-index': 999
+        # 'border-style': 'none'
+
+    $lamp.mouseout (event) ->
+      # hideBox() unless $parent.hasClass 'open'
+      $lamp.css
+        'z-index': 0
+#     state.rotation.z = 0
+#     state.fromRight = false
+#     # box.visible = false
+      { percX, percY } = perc_div event, $lamp
+      if percX > .5
+        viewer.turned = true
+        viewer.rotation.y = Math.PI
+      else
+        viewer.rotation.y = 0
+      viewer.rotation.z = 0
+
+
+    $lamp.click (event) ->
+      console.log
+      return if $('.lamp.open').length
+      # $lamp.width '50%'
+      # $lamp.height '100%'
+      $lamp.addClass 'open'
+      $('.lamp').not($lamp).hide()
+      $('#lamps').packery()
+      $('#information').show()
+      # showBox()
+      event.stopPropagation()
 
   $('#information').hide()
   $(document).click (event) ->
