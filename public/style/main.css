@@ -20,6 +20,7 @@
 #lamps {
   position: absolute;
   top: 50px;
+  border-right: 1px dashed #aaa;
 }
 
 .lamp {

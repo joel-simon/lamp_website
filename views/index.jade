@@ -11,7 +11,7 @@ html
     script(src='/libs/three.min.js')
     script(src='/libs/OBJLoader.js')
 
-    script(src='/model.js')
+    script(src='/ModelViewer.js')
     script(src='/main.js')
 
 
@@ -22,11 +22,13 @@ html
     #lamps
       for lamp in ['desk1', 'desk2', 'desk3', 'desk4', 'desk5']
         .lamp.desk(data-name=lamp)
+          img()
       for lamp in ['wall1', 'wall2', 'wall3', 'wall4', 'wall5']
         .lamp.wall(data-name=lamp)
+          img()
 
-      for image_path in lamp_imgs
-        img.lamp(src='imgs/lamps/'+image_path)
+      //- for image_path in lamp_imgs
+      //-   img.lamp(src='imgs/lamps/'+image_path)
 
 
     #information
