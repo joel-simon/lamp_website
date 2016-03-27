@@ -10,22 +10,31 @@ perc_div = (event, $) ->
 
 $ ->
   # Randomize order of lamps.
-  $('#lamps').randomize('.lamp')
+  # $('#lamps').randomize('.lamp')
 
   # Set dimensions.
-  $('.lamp.wall').width(300).height 600
-  $('.lamp.desk').width(300).height 300
+  d = 200
+  $('.lamp.wall').width(d).height d*2
+  $('.lamp.desk').width(d).height d
 
-  # Create packery instance.
-  $('#lamps').packery
-    itemSelector: '.lamp'
-    gutter: 0
+  $('#lampimages').hide()
 
-  $( 'img.lamp' ).hide()
-  # $('img').load () ->
-  #   $('#lamps').packery()
+  # Opem / close lamp
+  $('.lamp.3d').click (event) ->
+    $lamp = $(@)
+    if $lamp.hasClass 'open'
+      console.log 'has class open'
+      $('#lamps').animate width:'100%'
+      $('#lampimages').hide()
+      $lamp.removeClass 'open'
+    else
+      console.log 'does not have class open'
+      $('.lamp.open').removeClass 'open'
+      $lamp.addClass 'open'
+      $('#lamps').animate width:'50%'
+      $('#lampimages').show()
 
-  $('.lamp').each () ->
+  $('.lamp.3d').each () ->
     $lamp = $(@)
     box_path = if $lamp.hasClass 'desk' then 'obj/box_desk' else 'obj/box_wall'
     base_path = "obj/#{$lamp.data('name')}"
@@ -37,44 +46,25 @@ $ ->
       viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
 
     $lamp.mouseenter ( event ) ->
-      # showBox()
-      $lamp.css
-        'z-index': 999
-        # 'border-style': 'none'
+      $lamp.css 'z-index': 999
 
-    $lamp.mouseout (event) ->
-      # hideBox() unless $parent.hasClass 'open'
-      $lamp.css
-        'z-index': 0
-
+    # $lamp.mouseout (event) ->
+    $(document).scroll () ->
+      $lamp.css 'z-index': 0
       { percX, percY } = perc_div event, $lamp
       viewer.default_rotation.y = if percX > .5 then Math.PI else 0
       viewer.reset()
 
+  # $(document).click (event) ->
+  #   if $('.lamp.open')
+  #     $('.lamp.open').removeClass 'open'
+  #     $('.lamp').show()
+  #     $('.lamp').children().trigger 'mouseout'
 
-    $lamp.click (event) ->
-      console.log
-      return if $('.lamp.open').length
-      # $lamp.width '50%'
-      # $lamp.height '100%'
-      $lamp.addClass 'open'
-      $('.lamp').not($lamp).hide()
-      $('#lamps').packery()
-      $('#information').show()
-      # showBox()
-      event.stopPropagation()
-
-  $('#information').hide()
-  $(document).click (event) ->
-    if $('.lamp.open')
-      $('.lamp.open').removeClass 'open'
-      $('.lamp').show()
-      $('.lamp').children().trigger 'mouseout'
-
-      $( 'img.lamp' ).hide()
-      $('#lamps').packery()
-      $('#information').hide()
-      event.preventDefault()
+  #     $( 'img.lamp' ).hide()
+  #     # $('#lamps').packery()
+  #     # $('#information').hide()
+  #     event.preventDefault()
 
   $('.buy').click (event) ->
     alert('You bought a lamp!')

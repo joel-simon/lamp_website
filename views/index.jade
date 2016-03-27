@@ -21,18 +21,19 @@ html
 
     #lamps
       for lamp in ['desk1', 'desk2', 'desk3', 'desk4', 'desk5']
-        .lamp.desk(data-name=lamp)
+        .lamp.3d.desk(data-name=lamp)
           img()
-      for lamp in ['wall1', 'wall2', 'wall3', 'wall4', 'wall5']
-        .lamp.wall(data-name=lamp)
+      for lamp in ['wall0','wall1', 'wall2', 'wall3', 'wall4', 'wall5']
+        .lamp.3d.wall(data-name=lamp)
           img()
 
-      //- for image_path in lamp_imgs
-      //-   img.lamp(src='imgs/lamps/'+image_path)
+    #lampimages
+      for image_path in lamp_imgs
+        img.lamp(src='imgs/lamps/'+image_path)
 
 
-    #information
-      .content
-        h1 Lamp Name
-        h2 price: $300
-        img.buy(src='imgs/gift.ico')
+    //- #information
+    //-   .content
+    //-     h1 Lamp Name
+    //-     h2 price: $300
+    //-     img.buy(src='imgs/gift.ico')

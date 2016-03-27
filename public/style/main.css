@@ -12,21 +12,41 @@
 }
 
 #header h1 {
+  /*margin: 0 auto;*/
+  display:block;
+  text-align: center;
   /*color: white;*/
   font-family: 'Arial Narrow', Arial, sans-serif;
   font-size: 36;
 }
 
 #lamps {
-  position: absolute;
-  top: 50px;
+  /*position: absolute;*/
+  width: 100%;
+  float: left;
+  top: 300px;
   border-right: 1px dashed #aaa;
 }
 
+#lampimages {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100vh;
+  overflow: scroll;
+}
+
 .lamp {
-  border-left: 1px dashed #aaa;
-  border-bottom : 1px dashed #aaa;
+  margin: 0 auto;
+  display:block;
+  /*border-left: 1px dashed #aaa;*/
+  /*border-bottom : 1px dashed #aaa;*/
   cursor: pointer;
+}
+
+.lamp.open {
+  border : 1px solid;
 }
 
 .gift {

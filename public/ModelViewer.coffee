@@ -1,8 +1,8 @@
 class window.ModelViewer
   constructor: (@$parent, @modelPath, @boxPath, callback) ->
     @active = false
-    @scale = 10
-    @default_rotation = { z:0, y:0 }
+    @scale = 7#10
+    @default_rotation = { z:0, y:Math.PI }
     @rotation = { z: @default_rotation.z, y: @default_rotation.y }
 
     @width = @$parent.width()
@@ -19,7 +19,7 @@ class window.ModelViewer
     @camera.lookAt @scene.position
 
     # RENDERER
-    @renderer = new THREE.WebGLRenderer { preserveDrawingBuffer: true, alpha: true, antialias: true }
+    @renderer = new THREE.WebGLRenderer { preserveDrawingBuffer: true, alpha: true, antialias: false }
     @renderer.setPixelRatio window.devicePixelRatio
     @renderer.setSize @width, @height
     @renderer.setClearColor 0xffffff, 0
@@ -34,10 +34,13 @@ class window.ModelViewer
       @addModel @boxPath, (boxModel) =>
 
         boxModel.scale.multiplyScalar @scale
+
         @boxModel = boxModel
+        # @addBoxTexture()
+
         @animate()
         callback()
-  
+
   resize: () ->
     @width = @$parent.width()
     @height = @$parent.height()
@@ -73,10 +76,31 @@ class window.ModelViewer
       if mesh instanceof THREE.Mesh
         mesh._minEdges.visible = true
 
+  addBoxTexture: () ->
+    crateTexture = new THREE.ImageUtils.loadTexture 'imags/textures/rice_paper_1.jpg'
+    crateMaterial = new THREE.MeshBasicMaterial { map: crateTexture }
+    @boxModel.traverse ( mesh ) =>
+      if mesh instanceof THREE.Mesh
+        mesh.material = crateMaterial
+        mesh.material.needsUpdate = true
+
   addModel: (model, callback) ->
     basicWhite = new THREE.MeshBasicMaterial { color: 0xffffff }
     basicBlack = new THREE.MeshBasicMaterial { color: 0x000000 }
     objLoader = new THREE.OBJLoader()
+
+    texture = new THREE.Texture()
+    loader = new THREE.ImageLoader()
+    material = new THREE.MeshBasicMaterial( {
+      map: texture
+      transparent : true
+      side: THREE.DoubleSide
+      opacity: 0.8
+    } )
+    loader.load 'imgs/textures/rice_paper_1.jpg', ( image ) ->
+      texture.image = image
+      texture.needsUpdate = true
+
     objLoader.load model+'.obj', ( object ) =>
       @scene.add object
       object.traverse ( mesh ) =>
@@ -84,8 +108,9 @@ class window.ModelViewer
           mesh.geometry.computeFaceNormals()
           color =  0x000000
           mesh.material = basicWhite
-          edges = new THREE.EdgesHelper( mesh, color, 9999999 )
-          edges.material.linewidth = 4
+
+          edges = new THREE.EdgesHelper( mesh, color, 999 )
+          edges.material.linewidth = 2
           @scene.add edges
           mesh._minEdges = edges
 
