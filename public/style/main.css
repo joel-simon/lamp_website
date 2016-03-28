@@ -1,3 +1,4 @@
+
 #header {
   position: fixed;
   background-color: white;
@@ -22,6 +23,8 @@
 
 #lamps {
   /*position: absolute;*/
+  margin-top: 60px;
+  margin-bottom: 50vh;
   width: 100%;
   float: left;
   top: 300px;
@@ -30,11 +33,17 @@
 
 #lampimages {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 50%;
+  top: 60px;
+  right: 0px;
+  width: 0%;
   height: 100vh;
   overflow: scroll;
+}
+
+img.lamp {
+  margin: 10px;
+  margin: 0 auto;
+  padding: 40px;
 }
 
 .lamp {
@@ -46,7 +55,7 @@
 }
 
 .lamp.open {
-  border : 1px solid;
+  border : 1px dashed #aaa;
 }
 
 .gift {

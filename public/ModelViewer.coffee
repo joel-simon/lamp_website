@@ -1,6 +1,8 @@
 class window.ModelViewer
   constructor: (@$parent, @modelPath, @boxPath, callback) ->
     @active = false
+    @loaded = false
+    @animating = false
     @scale = 7#10
     @default_rotation = { z:0, y:Math.PI }
     @rotation = { z: @default_rotation.z, y: @default_rotation.y }
@@ -36,9 +38,10 @@ class window.ModelViewer
         boxModel.scale.multiplyScalar @scale
 
         @boxModel = boxModel
+        @loaded = true
         # @addBoxTexture()
 
-        @animate()
+        # @animate()
         callback()
 
   resize: () ->
@@ -53,9 +56,9 @@ class window.ModelViewer
     @camera.updateProjectionMatrix()
 
   animate: () =>
-    @animateId = requestAnimationFrame @animate
-    @renderer.render @scene, @camera
     @update()
+    @renderer.render @scene, @camera
+
 
   update: () ->
     @baseModel.rotation.y = @rotation.y
@@ -101,7 +104,7 @@ class window.ModelViewer
       texture.image = image
       texture.needsUpdate = true
 
-    objLoader.load model+'.obj', ( object ) =>
+    objLoader.load model, ( object ) =>
       @scene.add object
       object.traverse ( mesh ) =>
         if mesh instanceof THREE.Mesh
@@ -117,8 +120,12 @@ class window.ModelViewer
       callback object
 
   reset: () ->
-    @rotation.y = @default_rotation.y
-    @rotation.z = @default_rotation.z
+    @animating = true
+    tween = new TWEEN.Tween(@rotation)
+      .to(@default_rotation, 200)
+      .easing TWEEN.Easing.Linear.None
+      .start()
+      .onComplete(() => @animating = false)
 
   toImage: () ->
     image = @renderer.domElement.toDataURL("image/png").replace "image/png", "image/octet-stream"

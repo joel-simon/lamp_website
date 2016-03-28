@@ -7,53 +7,104 @@ perc_div = (event, $) ->
   percY = relY / $.height()
   return { percX, percY }
 
+openLamp = ($lamp) ->
+  name = $lamp.data 'name'
+
+  $("img.lamp.#{name}").show()
+  $('img.lamp').not(".#{name}").hide()
+
+  $lamp.data('viewer').reset()
+  $('.lamp.open').removeClass 'open'
+  $lamp.addClass 'open'
+  $('#lamps').animate width:'50%'
+  $('.lamp.3d').not($lamp).animate 'opacity': 0
+
+  # $lamp.css width: $(document).width()/2
+  # $lamp.css width: $(document).width()/2
+  # $lamp.css height: $(document).height()
+  # $lamp.data('viewer').resize()
+
+  $(document.body).animate({
+    scrollTop: $lamp.offset().top - ($(window).height()-$lamp.height())/2
+  });
+
+  $(document.body).css 'overflow': 'hidden'
+
+
+  $('#lampimages')
+    .scrollTop(0)
+    .animate(width:'50%')
+
+closeLamp = ($lamp) ->
+  $('#lamps').animate width:'100%'
+  $('#lampimages')
+    .animate(width:'0%')
+
+
+  $(document.body).css 'overflow': ''
+  $('.lamp.3d').not($lamp).animate 'opacity': 100
+  $lamp.removeClass 'open'
+
+modelViewers = []
 
 $ ->
-  # Randomize order of lamps.
-  # $('#lamps').randomize('.lamp')
+  d = 200  # Set dimensions.
 
-  # Set dimensions.
-  d = 200
-  $('.lamp.wall').width(d).height d*2
-  $('.lamp.desk').width(d).height d
-
-  $('#lampimages').hide()
-
-  # Opem / close lamp
+  # Open / close lamp
   $('.lamp.3d').click (event) ->
-    $lamp = $(@)
-    if $lamp.hasClass 'open'
-      console.log 'has class open'
-      $('#lamps').animate width:'100%'
-      $('#lampimages').hide()
-      $lamp.removeClass 'open'
+    $('.lamp.3d').each () ->
+      viewer = $(@).data 'viewer'
+      viewer.reset() unless viewer.animating
+    if $(@).hasClass 'open'
+      closeLamp $(@)
     else
-      console.log 'does not have class open'
-      $('.lamp.open').removeClass 'open'
-      $lamp.addClass 'open'
-      $('#lamps').animate width:'50%'
-      $('#lampimages').show()
+      openLamp $(@)
+
+
+  $(document).scroll () ->
+    for viewer in modelViewers
+      viewer.reset() if viewer.loaded and not viewer.animating
 
   $('.lamp.3d').each () ->
     $lamp = $(@)
-    box_path = if $lamp.hasClass 'desk' then 'obj/box_desk' else 'obj/box_wall'
-    base_path = "obj/#{$lamp.data('name')}"
-    viewer = new ModelViewer $lamp, base_path, box_path, (() ->)
+    $lamp.width d
 
-    $lamp.mousemove ( event ) ->
+    if $lamp.hasClass 'wall'
+      box_path = 'obj/box_wall.obj'
+      $lamp.height d*2
+    else
+      box_path = 'obj/box_desk.obj'
+      $lamp.height d
+
+    base_path = $lamp.data 'obj'
+    viewer = new ModelViewer $lamp, base_path, box_path, (() ->)
+    modelViewers.push viewer
+    $lamp.data 'viewer', viewer
+
+    $lamp.mousemove (event) ->
       { percX, percY } = perc_div event, $lamp
       viewer.rotation.y = (percX)* Math.PI
       viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
-
-    $lamp.mouseenter ( event ) ->
-      $lamp.css 'z-index': 999
-
-    # $lamp.mouseout (event) ->
-    $(document).scroll () ->
-      $lamp.css 'z-index': 0
-      { percX, percY } = perc_div event, $lamp
       viewer.default_rotation.y = if percX > .5 then Math.PI else 0
-      viewer.reset()
+
+    $lamp.on 'touchmove', ( event ) ->
+      { percX, percY } = perc_div event.originalEvent.touches[0], $lamp
+      viewer.rotation.y = (percX)* Math.PI
+      viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
+      viewer.default_rotation.y = if percX > .5 then Math.PI else 0
+      event.preventDefault()
+      event.stopPropagation()
+
+  animateAll = () ->
+    for viewer in modelViewers
+      viewer.animate() if viewer.loaded
+    requestAnimationFrame animateAll
+    TWEEN.update()
+
+  animateAll()
+  # requestAnimationFrame animateAll
+    # $(document).scroll () ->
+
 
   # $(document).click (event) ->
   #   if $('.lamp.open')

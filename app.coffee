@@ -5,6 +5,7 @@ fs = require 'fs'
 app.set 'views', __dirname+'/views'
 app.set 'view engine', 'jade'
 app.use express.static(__dirname+'/public')
+path = require 'path'
 
 app.use coffeeMiddleware {
   src: __dirname+'/public'
@@ -15,13 +16,21 @@ app.use coffeeMiddleware {
   bare: true
 }
 
-lamp_imgs = null
+# lamps = fs.readdirSync('public/lamps')
+#   .map( (file) -> path.join('public/lamps', file) )
+#   .filter( (file) -> fs.statSync(file).isDirectory() )
+#   .map (file) ->
+#     files = fs.readdirSync(file).map((f) -> path.join(file, f))
+#     type: file.match(/\/([a-z]+)/)[1]
+#     name: file.split('/')[2]
+#     img: files.filter((f) -> f.indexOf('.jpg') > -1)
+#     obj: files.filter((f) -> f.indexOf('.obj') > -1)[0]
+#     mtl: files.filter((f) -> f.indexOf('.mtl') > -1)[0]
 
-fs.readdir 'public/imgs/lamps', (err, files) ->
-  lamp_imgs = files
+# console.log lamps
 
 app.get '/', (req, res) ->
-  res.render 'index.jade', { lamp_imgs }
+  res.render 'index.jade', { lamps }
 
 # catch 404 and forward to error handler
 app.get '*', (req, res, next) ->
