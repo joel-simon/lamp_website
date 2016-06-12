@@ -186,7 +186,6 @@ bindScrollSnap = () ->
     center min_lamp
 
   $('.scrollcontainer').scroll (event) ->
-
     clearTimeout scrollTimer
     scrollTimer = setTimeout(scrollEnd, 50)
 
@@ -199,9 +198,9 @@ center = ($lamp) ->
   }, 200, 'swing')
 
 $ ->
-  $("body").mousewheel (event, delta) ->
-    $('.scrollcontainer')[0].scrollLeft -= delta
-    event.preventDefault()
+  # $("body").mousewheel (event, delta) ->
+  #   $('.scrollcontainer')[0].scrollLeft -= delta
+  #   event.preventDefault()
 
 
   $('.lamp.3d.wall').remove()

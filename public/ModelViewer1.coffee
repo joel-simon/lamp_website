@@ -4,6 +4,9 @@ boxMaterial = new THREE.MeshBasicMaterial { map: boxTexture, transparent:true, o
 baseTexture = new THREE.ImageUtils.loadTexture 'imgs/textures/cherry3_s.jpg'
 baseMaterial = new THREE.MeshLambertMaterial { map: baseTexture }
 
+model_cache = {}
+objLoader = new THREE.OBJLoader()
+
 class window.ModelViewer
   constructor: ($parent) ->
     @active = true
@@ -31,6 +34,7 @@ class window.ModelViewer
     @renderer.setPixelRatio window.devicePixelRatio
     @renderer.setSize @width, @height
     @renderer.setClearColor 0xffffff, 0
+
 
     @moveTo $parent
 
@@ -130,11 +134,14 @@ class window.ModelViewer
         mesh.material.needsUpdate = true
     # @baseModel.castShadow = true
 
-  addModel: (model, callback) ->
-    objLoader = new THREE.OBJLoader()
-    objLoader.load model, ( object ) =>
-      @scene.add object
-      callback object
+  addModel: (model_path, callback) ->
+    if model_path in model_cache
+      @scene.add model_cache[model_path]
+      callback model_cache[model_path]
+    else
+      objLoader.load model_path, ( object ) =>
+        @scene.add object
+        callback object
       # object.traverse ( mesh ) =>
       #   if mesh instanceof THREE.Mesh
       #     mesh.material.map = texture
