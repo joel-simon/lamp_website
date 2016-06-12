@@ -12,7 +12,7 @@ compileFile = (file) ->
   else
     code
 
-src = 'public/src/'
+src = 'public/'
 files = (fs.readdirSync(path.join(__dirname,src)))
   .map((f) -> path.join(src+f))
   .filter((f) -> f.match(/.+\.(coffee|js)/g)?)

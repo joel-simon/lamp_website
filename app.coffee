@@ -9,7 +9,7 @@ app.use express.static(__dirname+'/public')
 
 
 app.use coffeeMiddleware {
-  src: __dirname+'/public/src'
+  src: __dirname+'/public'
   compress: false
   encodeSrc: false
   force: true

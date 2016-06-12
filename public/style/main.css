@@ -1,87 +1,71 @@
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+}
+
 #header {
   position: fixed;
-  background-color: white;
+  /*background-color: white;*/
   width: 100%;
-  background: solid;
+  /*background: solid;*/
   top: 0px;
   left: 0px;
-  z-index: 999;
-  border-bottom: 3px solid;
-  height: 60px;
-  margin-top: -10px;
+  /*z-index: 999;*/
+  /*border-bottom: 3px solid;*/
+  /*height: 60px;*/
+  /*margin-top: -10px;*/
 }
 
 #header h1 {
-  /*margin: 0 auto;*/
+  margin: 0 auto;
   display:block;
   text-align: center;
-  /*color: white;*/
+  color: black;
   font-family: 'Arial Narrow', Arial, sans-serif;
   font-size: 36;
 }
 
-#lamps {
-  /*position: absolute;*/
-  margin-top: 60px;
-  margin-bottom: 50vh;
-  width: 100%;
-  float: left;
-  top: 300px;
-  border-right: 1px dashed #aaa;
-}
+.scrollcontainer {
+  width: auto;
 
-#lampimages {
-  position: fixed;
-  top: 60px;
-  right: 0px;
-  width: 0%;
   height: 100vh;
-  overflow: scroll;
-}
 
-img.lamp {
-  margin: 10px;
-  margin: 0 auto;
-  padding: 40px;
+  padding-left: 30vw;
+  padding-right: 30vw;
+
+  box-sizing: border-box;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .lamp {
-  margin: 0 auto;
-  display:block;
-  /*border-left: 1px dashed #aaa;*/
-  /*border-bottom : 1px dashed #aaa;*/
+  /*background-color: red;*/
+
+  display:inline-block;
   cursor: pointer;
+  vertical-align: middle;
+  /*border: 1px solid;*/
+}
+
+.lamp.desk {
+  min-width: 400px;
+  max-width: 800px;
+
+  height: 75%;
+  /*margin-top: 25%;*/
+
+  width: 75vw;
 }
 
 .lamp.open {
-  border : 1px dashed #aaa;
+  border-top : 1px dashed;
+  border-bottom : 1px dashed;
 }
 
-.gift {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  /*display: none;*/
-}
-
-
-#information {
-  position: absolute;
-  top:50px;
-  right:0px;
-  height: 100%;
-  width: 50%;
-  /*border: 60px;*/
-}
-
-#information .content {
-  padding: 20%;
-}
-
-#information img {
-  width: 50%;
-  cursor: pointer;
-}
