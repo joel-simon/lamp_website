@@ -24,6 +24,8 @@ class window.ModelViewer
     @scene.add directionalLight
 
     # CAMERA
+    @width = $parent.width()
+    @height = $parent.height()
     @camera = new THREE.OrthographicCamera @width / - 2, @width / 2, @height / 2, @height / - 2, 1, 1000
     @scene.add @camera
     @camera.position.set(0,0,600)
@@ -35,15 +37,16 @@ class window.ModelViewer
     @renderer.setSize @width, @height
     @renderer.setClearColor 0xffffff, 0
 
+    @setScale @width/40
+    @$parent = $parent
+    @moveToParent()
 
-    @moveTo $parent
-
-  moveTo: (@$parent, callback) ->
-    if $parent.hasClass 'wall'
+  moveToParent: () ->
+    if @$parent.hasClass 'wall'
       box_path = 'obj/box_wall.obj'
     else
       box_path = 'obj/box_desk.obj'
-    base_path = "#{$parent.data('path')}.obj"
+    base_path = "#{@$parent.data('path')}.obj"
 
     @scale = @$parent.height()/100
     @rotation = { z: @default_rotation.z, y: @default_rotation.y, x:0 }
@@ -58,10 +61,10 @@ class window.ModelViewer
       @scene.remove @boxModel
 
     @addModel base_path, (baseModel) =>
-      baseModel.scale.multiplyScalar @scale
+      # baseModel.scale.multiplyScalar @scale
       @baseModel = baseModel
       @addModel box_path, (boxModel) =>
-        boxModel.scale.multiplyScalar @scale
+        # boxModel.scale.multiplyScalar @scale
         @boxModel = boxModel
         @loaded = true
         @resize()
@@ -69,33 +72,31 @@ class window.ModelViewer
         @addBaseTexture()
 
   resize: () ->
-
+    # console.log 'resize'
     @width = @$parent.width()
     @height = @$parent.height()
-    # console.log 'resize', @width, @height
-    bBox = new THREE.Box3().setFromObject(@scene);
 
-    # if (bBox.size().y / @height) > (bBox.size().x / @width)
-    #   @setScale @height/50
-    # else
     @setScale @width/40
 
-    @renderer.setSize @width, @height
     @camera.left = @width / - 2
     @camera.right = @width / 2
     @camera.top = @height / 2
     @camera.bottom = @height / - 2
-    # @camera.lookAt @scene.position
     @camera.updateProjectionMatrix()
+
+    @renderer.setSize @width, @height
+
 
   animate: () =>
     if @active
       @update()
       @renderer.render @scene, @camera
 
-  setScale: (@scale) ->
-    @boxModel.scale.set @scale, @scale, @scale
-    @baseModel.scale.set @scale, @scale, @scale
+  setScale: (scale) ->
+    @scale = scale
+    if @boxModel
+      @boxModel.scale.set @scale, @scale, @scale
+      @baseModel.scale.set @scale, @scale, @scale
 
   update: () ->
     @baseModel.rotation.x = @rotation.x
@@ -136,8 +137,10 @@ class window.ModelViewer
 
   addModel: (model_path, callback) ->
     if model_path in model_cache
-      @scene.add model_cache[model_path]
-      callback model_cache[model_path]
+      model = model_cache[model_path]
+      model.scale.multiplyScalar @scale
+      @scene.add model
+      callback model
     else
       objLoader.load model_path, ( object ) =>
         @scene.add object

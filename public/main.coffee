@@ -126,12 +126,13 @@ bindScrollShow = () ->
           # viewer object on non active lamp
           source = $('.lamp.3d.viewer').not('.active').first()
           viewer = source.data('viewer')
-
-          source.removeClass 'viewer'
-          source.data('viewer', null)
-          viewer.moveTo $(@)
-          $(@).data('viewer', viewer)
-          $(@).addClass 'viewer'
+          if viewer
+            source.removeClass 'viewer'
+            source.data('viewer', null)
+            viewer.$parent = $(@)
+            viewer.moveToParent()
+            $(@).data('viewer', viewer)
+            $(@).addClass 'viewer'
 
         $(@).addClass 'active'
 
@@ -153,13 +154,12 @@ bindScrollRotate = () ->
 
         viewer.rotation.z = (((percX - 0.50)/12) * Math.PI)
 
-bindResize = ($lamps) ->
-  # $lamps.css
-  #   width
+bindResize = () ->
   $( window ).resize () ->
-    $lamps.each () ->
-    # if $(@).index() == 2
+    # console.log 'resizing', $('.lamp.3d.viewer')
+    $('.lamp.3d.viewer').each () ->
       $(@).data('viewer').resize()
+    scrollEnd()
 
 bindResetOnScroll = ($lamps) ->
   # $('.scrollcontainer').scroll (event) ->
@@ -171,20 +171,20 @@ bindResetOnScroll = ($lamps) ->
     viewer = $(@).data 'viewer'
     viewer.reset() if viewer.loaded and not viewer.animating
 
+scrollEnd = () ->
+  min_lamp = null
+  min_d = 9999
+  center_x = $(window).width()/2
+  $('.lamp').each () ->
+    x = $(@).offset().left + $(@).width()/2
+    d = Math.abs(center_x - x)
+    if d < min_d
+      min_d = d
+      min_lamp = $(@)
+  center min_lamp
+
 scrollTimer = null
 bindScrollSnap = () ->
-  scrollEnd = () ->
-    min_lamp = null
-    min_d = 9999
-    center_x = $(window).width()/2
-    $('.lamp').each () ->
-      x = $(@).offset().left + $(@).width()/2
-      d = Math.abs(center_x - x)
-      if d < min_d
-        min_d = d
-        min_lamp = $(@)
-    center min_lamp
-
   $('.scrollcontainer').scroll (event) ->
     clearTimeout scrollTimer
     scrollTimer = setTimeout(scrollEnd, 50)
@@ -202,34 +202,16 @@ $ ->
   #   $('.scrollcontainer')[0].scrollLeft -= delta
   #   event.preventDefault()
 
-
   $('.lamp.3d.wall').remove()
 
   $lamps = $('.lamp.3d')
-  modelViewers = createModelViewers $lamps.slice(0,3)
+  modelViewers = createModelViewers $lamps.slice(0, 3)
 
   bindScrollRotate()
   bindScrollShow()
   bindScrollSnap()
-  # bindResize $lamps
+  bindResize()
   center $lamps.first()
-  # $('.scrollcontainer').trigger('scroll')
-
-  # $lamps.click (event) ->
-  #   $lamps.each () ->
-  #     viewer = $(@).data 'viewer'
-  #     viewer.reset() unless viewer.animating
-  #   if $(@).hasClass 'open'
-  #     closeLamp $(@)
-  #   else
-  #     openLamp $(@)
-
-  # bindResetOnScroll $lamps
-
-  # if $(window).width() < 1000
-  # if true
-    # bindTilt($lamps)
-  # bindMouseMoveRotate $lamps
 
     # $lamp.on 'touchmove', ( event ) ->
     #   { percX, percY } = perc_div event.originalEvent.touches[0], $lamp

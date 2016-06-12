@@ -56,12 +56,17 @@ body {
 
 .lamp.desk {
   min-width: 400px;
-  max-width: 800px;
-
+  /*max-width: 800px;*/
   height: 75%;
   /*margin-top: 25%;*/
+  width: 100vw;
+}
 
-  width: 75vw;
+@media screen and (min-width: 600px) {
+    .lamp.desk {
+        max-width: 800px;
+        width: 75vw;
+    }
 }
 
 .lamp.open {
