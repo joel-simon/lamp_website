@@ -7,7 +7,6 @@ fs = require 'fs'
 app.set('view engine', 'html')
 app.use express.static(__dirname+'/public')
 
-
 app.use coffeeMiddleware {
   src: __dirname+'/public'
   compress: false

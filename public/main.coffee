@@ -1,3 +1,5 @@
+lastMouse = {x:0, y:0}
+
 perc_div = (event, $) ->
   offset = $.offset()
   relX = event.pageX - offset.left
@@ -7,107 +9,23 @@ perc_div = (event, $) ->
   percY = relY / $.height()
   return { percX, percY }
 
-openLamp = ($lamp) ->
-  name = $lamp.data 'name'
 
-  $("img.lamp.#{name}").show()
-  $('img.lamp').not(".#{name}").hide()
-
-  $lamp.data('viewer').reset()
-  $('.lamp.open').removeClass 'open'
-  $lamp.addClass 'open'
-  $('#lamps').animate width:'25%'
-
-  # $('.lamp.3d').not($lamp).animate 'opacity': 20
-
-  # $lamp.css width: $(document).width()/2
-  # $lamp.css height: $(document).height()
-  # $lamp.data('viewer').resize()
-  # $lamp.data('viewer').setScale 14
-
-  $(document.body).animate({
-    scrollTop: $lamp.offset().top - ($(window).height()-$lamp.height())/2
-  });
-
-  $(document.body).css 'overflow': 'hidden'
-
-
-  $('#lampimages')
-    .scrollTop(0)
-    .animate(width:'75%')
-
-closeLamp = ($lamp) ->
-  $('#lamps').animate width:'100%'
-  $('#lampimages')
-    .animate(width:'0%')
-
-
-  $(document.body).css 'overflow': ''
-  $('.lamp.3d').not($lamp).animate 'opacity': 100
-  $lamp.removeClass 'open'
-
-
-lastMouse = {x:0, y:0}
-
-# createModelViewers = ($lamps) ->
-#   modelViewers = []
-#   $lamps.each () ->
-#     $lamp = $(@)
-#     if $lamp.hasClass 'wall'
-#       box_path = 'obj/box_wall.obj'
-#     else
-#       box_path = 'obj/box_desk.obj'
-#     base_path = "#{$lamp.data('path')}.obj"
-#     mtl_path = "#{$lamp.data('path')}.mtl"
-#     viewer = new ModelViewer $lamp, base_path, mtl_path, box_path
-#     modelViewers.push viewer
-#     $lamp.data 'viewer', viewer
-
-#   return modelViewers
-
-createModelViewers = ($parents) ->
-  modelViewers = []
-
-  $parents.addClass 'active'
-  $parents.addClass 'viewer'
-
-  $parents.each () ->
-    viewer = new ModelViewer($(@))
-    $(@).data 'viewer', viewer
-    modelViewers.push viewer
-
-  return modelViewers
-
-# lampClick = (event) ->
-bindTilt = ($lamps) ->
-  averages = []
-  if window.DeviceMotionEvent
-    $(window).on 'devicemotion', (ev) ->
-      acc = ev.originalEvent.accelerationIncludingGravity
-      averages.push -acc.y* Math.PI / 180 * 4
-
-      if averages.length > 10
-        averages.shift()
-        average = averages.reduce((a, b)-> a + b) / 10
-        console.log average
-        for viewer in modelViewers
-          viewer.rotation.x = average
-      viewer.rotation.y = -acc.x* Math.PI / 180 * 4
-
-bindMouseMoveRotate = ($lamps) ->
-  $lamps.mousemove (event) ->
-    $lamp = $(@)
-    viewer = $lamp.data 'viewer'
+bindMouseMoveRotate = ($frames) ->
+  return
+  $frames.mousemove (event) ->
+    id = $(@).data().id
+    object = objects[id]
     # Dont trigger mousemove if only page scrolled.
     if lastMouse.x == event.screenX and lastMouse.y == event.screenY
       return
+
     lastMouse.x = event.screenX
     lastMouse.y = event.screenY
 
-    { percX, percY } = perc_div event, $lamp
-    viewer.rotation.y = (percX)* Math.PI
-    viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
-    viewer.default_rotation.y = if percX > .5 then Math.PI else 0
+    { percX, percY } = perc_div event, $(@)
+    object.rotation.y = (percX)* Math.PI
+    object.rotation.z = (((percY - 0.50)/4) * Math.PI)
+    # obj.default_rotation.y = if percX > .5 then Math.PI else 0
 
 bindScrollShow = () ->
   $lamps = $('.lamp.3d')
@@ -136,31 +54,6 @@ bindScrollShow = () ->
 
         $(@).addClass 'active'
 
-bindScrollRotate = () ->
-  $lamps = $('.lamp.3d')
-  $('.scrollcontainer').scroll (event) ->
-    $lamps.each () ->
-      if $(@).hasClass 'viewer'
-        $lamp = $(@)
-        viewer = $lamp.data 'viewer'
-
-        left = $lamp.offset().left + ($lamp.width()/2)
-
-        percX = left / $(window).width()
-        percX = Math.max(percX, 0)
-        percX = Math.min(percX, 1)
-
-        viewer.rotation.y = ((percX) * (Math.PI)) + (-90 * Math.PI / 180)
-
-        viewer.rotation.z = (((percX - 0.50)/12) * Math.PI)
-
-bindResize = () ->
-  $( window ).resize () ->
-    # console.log 'resizing', $('.lamp.3d.viewer')
-    $('.lamp.3d.viewer').each () ->
-      $(@).data('viewer').resize()
-    scrollEnd()
-
 bindResetOnScroll = ($lamps) ->
   # $('.scrollcontainer').scroll (event) ->
   #   $lamps.each () ->
@@ -171,47 +64,78 @@ bindResetOnScroll = ($lamps) ->
     viewer = $(@).data 'viewer'
     viewer.reset() if viewer.loaded and not viewer.animating
 
-scrollEnd = () ->
-  min_lamp = null
-  min_d = 9999
-  center_x = $(window).width()/2
-  $('.lamp').each () ->
-    x = $(@).offset().left + $(@).width()/2
-    d = Math.abs(center_x - x)
-    if d < min_d
-      min_d = d
-      min_lamp = $(@)
-  center min_lamp
+class Lamp
+  constructor: (@path, @type, @rx=0, @ry = 0, @rz = 0) ->
+    # console.log @ry
+    # @rx = rx
+    # @ry = ry
+    # @rz = rz
 
-scrollTimer = null
-bindScrollSnap = () ->
-  $('.scrollcontainer').scroll (event) ->
-    clearTimeout scrollTimer
-    scrollTimer = setTimeout(scrollEnd, 50)
+lamps = [
+  new Lamp('lamps/desk_0/desk0.obj', 'desk', 0, -Math.PI/2),
 
-center = ($lamp) ->
-  lamp_center = $lamp.offset().left + $lamp.width()/2
-  window_center = $(window).width()/2
-  scroll = $('.scrollcontainer').scrollLeft()
-  $('.scrollcontainer').animate({
-    scrollLeft: scroll + lamp_center - window_center
-  }, 200, 'swing')
+  new Lamp('lamps/desk_1/desk1.obj', 'desk', 0, -Math.PI/2),
+  new Lamp('lamps/desk_2/desk2.obj', 'desk', 0, -Math.PI/2),
+  new Lamp('lamps/desk_3/desk3.obj', 'desk', 0, -Math.PI/2),
+  new Lamp('lamps/desk_4/desk4.obj', 'desk', 0, -Math.PI/2),
+  new Lamp('lamps/desk_5/desk5.obj', 'desk', 0, -Math.PI/2),
 
-$ ->
-  # $("body").mousewheel (event, delta) ->
-  #   $('.scrollcontainer')[0].scrollLeft -= delta
-  #   event.preventDefault()
+  new Lamp('lamps/wall_0/wall0.obj', 'wall', 0, 2*Math.PI),
+  new Lamp('lamps/wall_1/wall1.obj', 'wall', 0, 2*Math.PI/2),
+  new Lamp('lamps/wall_2/wall2.obj', 'wall', 0, 2*Math.PI/2),
+  new Lamp('lamps/wall_3/wall3.obj', 'wall', 0, 2*Math.PI/2),
+  new Lamp('lamps/wall_4/wall4.obj', 'wall', 0, 2*Math.PI/2),
+  new Lamp('lamps/wall_5/wall5.obj', 'wall', 0, 2*Math.PI/2),
 
-  $('.lamp.3d.wall').remove()
+]
 
-  $lamps = $('.lamp.3d')
-  modelViewers = createModelViewers $lamps.slice(0, 3)
+addLampPadding = (id) ->
+  $frame = $('<div class="frame"></div>')
+  $frame.append($('<div class="innerframe"></div>'))
 
-  bindScrollRotate()
-  bindScrollShow()
-  bindScrollSnap()
-  bindResize()
-  center $lamps.first()
+  # $frame.append($('<div class="pics"></div>'))
+  # $frame.append($('<div class="buy"></div>'))
+  $frame.append($('<img class="pics" src="imgs/picture1.svg">'))
+  # $frame.append($('<img class="buy" src="imgs/gift.svg">'))
+
+  $frame.children('.innerframe').data 'id': id
+  $('#framecontainer').append($frame)
+
+main = () ->
+  id = 0
+  for lamp in lamps
+    addLampPadding(id)
+    id += 1
+
+  $("#framecontainer").mousewheel (event, delta) ->
+    $(@).scrollLeft @scrollLeft - delta
+    # $('#scrollcontainer').scrollTop $('#framecontainer').scrollLeft()
+  #    $('#framecontainer')[0].scrollLeft -= delta
+    # console.log event
+    # $('#scrollcontainer').trigger 'mousewheel', event
+
+  # Connect vertical scrolling of page to horizontal scrolling of frames.
+  # $('#scrollcontainer').scroll (event) ->
+  #   $('#framecontainer').scrollLeft $('#scrollcontainer').scrollTop()
+
+  # Frame container has a padding at beginning and end.
+  $('#framecontainer').append $('<div class="framepadding">')
+
+  # $('.innerframe').mousemove (event) ->
+  #   tumble $(@).data().i, even
+
+  $('.framepadding').width $(window).width()/2 - 300
+
+  init(lamps)
+  animate()
+
+  bindMouseMoveRotate $('.innerframe')
+
+  # bindScrollRotate()
+  # bindScrollShow()
+  # bindScrollSnap()
+  # bindResize()
+  # center $lamps.first()
 
     # $lamp.on 'touchmove', ( event ) ->
     #   { percX, percY } = perc_div event.originalEvent.touches[0], $lamp
@@ -220,11 +144,3 @@ $ ->
     #   viewer.default_rotation.y = if percX > .5 then Math.PI else 0
     #   event.preventDefault()
     #   event.stopPropagation()
-
-  animateAll = () ->
-    for viewer in modelViewers
-      viewer.animate() if viewer.loaded
-    requestAnimationFrame animateAll
-    TWEEN.update()
-
-  animateAll()

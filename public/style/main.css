@@ -1,23 +1,50 @@
-
-html, body {
-  margin: 0;
-  padding: 0;
+html {
+  height: 100%;
+  overflow: hidden;
 }
+
 body {
   height: 100%;
+  overflow: hidden;
+}
+
+#scrollcontainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /*min-height: 10000px;*/
+  overflow: auto;
+  /*height: 10000px;*/
+ /* width: auto;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;*/
+  /*pointer-events: none;*/
+}
+
+#scenecontainer {
+  position: fixed;
+  left:0px;
+  top:0px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 #header {
   position: fixed;
-  /*background-color: white;*/
+  background-color: white;
   width: 100%;
   /*background: solid;*/
   top: 0px;
   left: 0px;
-  /*z-index: 999;*/
-  /*border-bottom: 3px solid;*/
-  /*height: 60px;*/
-  /*margin-top: -10px;*/
+  z-index: 2;
+  border-bottom: 3px solid;
 }
 
 #header h1 {
@@ -29,31 +56,81 @@ body {
   font-size: 36;
 }
 
-.scrollcontainer {
-  width: auto;
+#framecontainer {
+  position: absolute;
+  top:0;
+  left:0;
+  /*max-width: 100000000px;*/
+  /*width: 100000px;*/
+  height:110%; /* 10% larger to hide scrollbar */
+  width:100%;
 
-  height: 100vh;
-
-  padding-left: 30vw;
-  padding-right: 30vw;
-
-  box-sizing: border-box;
   overflow-x: scroll;
   overflow-y: hidden;
+  box-sizing: border-box;
   white-space: nowrap;
+  /*pointer-events: none;*/
 
-  -webkit-overflow-scrolling: touch;
 }
+
+.framepadding {
+  height:100%;
+  width:25vw;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.frame {
+  height:100%;
+  width:500px;
+  display: inline-block;
+  vertical-align: middle;
+
+  /*background-color: red;*/
+  /*border: 1px solid;*/
+}
+.innerframe {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  /*background-color: blue;*/
+  margin: 0 auto;
+  cursor: -webkit-grab;
+  /*cursor: -webkit-grabbing;*/
+}
+
+.pics, .buy {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  /*background-color: green;*/
+  bottom: -30%;
+  left: 80%;
+  margin: 5px;
+  float: left;
+}
+
+.pics {
+  cursor: pointer;
+}
+
+.buy {
+  cursor: copy;
+}
+/*
+.padding {
+  height: 600px;
+}*/
 
 .lamp {
   /*background-color: red;*/
-
-  display:inline-block;
-  cursor: pointer;
-  vertical-align: middle;
+  /*display:inline-block;*/
+  /*cursor: pointer;*/
+  /*vertical-align: middle;*/
   /*border: 1px solid;*/
 }
-
+/*
 .lamp.desk {
   min-width: 400px;
   /*max-width: 800px;*/
@@ -74,3 +151,4 @@ body {
   border-bottom : 1px dashed;
 }
 
+*/
