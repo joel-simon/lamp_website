@@ -1,3 +1,5 @@
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
+
 html {
   height: 100%;
   overflow: hidden;
@@ -8,137 +10,96 @@ body {
   overflow: hidden;
 }
 
-#scrollcontainer {
+#scroll_container {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  /*min-height: 10000px;*/
-  overflow: auto;
-  /*height: 10000px;*/
- /* width: auto;
-  height: 100vh;
-  box-sizing: border-box;
   overflow-x: scroll;
   overflow-y: hidden;
+  box-sizing: border-box;
   white-space: nowrap;
-  -webkit-overflow-scrolling: touch;*/
-  /*pointer-events: none;*/
+  width: 100vw;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
 }
 
-#scenecontainer {
-  position: fixed;
-  left:0px;
-  top:0px;
-  width: 100%;
+.lamp_container {
   height: 100%;
-  pointer-events: none;
+  position: relative;
+  display: inline-block; /*For scrolling.*/
+}
+
+.lamp {
+  vertical-align: middle;
+}
+
+.lamp.lead {
+  padding-left: 5vw;
+  max-width: 50vw;
 }
 
 #header {
   position: fixed;
-  background-color: white;
+  /*background-color: gray;*/
   width: 100%;
   /*background: solid;*/
   top: 0px;
   left: 0px;
   z-index: 2;
-  border-bottom: 3px solid;
+  /*border-bottom: 3px solid;*/
 }
 
 #header h1 {
-  margin: 0 auto;
   display:block;
   text-align: center;
+  padding-right: 15px;
   color: black;
-  font-family: 'Arial Narrow', Arial, sans-serif;
+  /*font-family: 'Arial Narrow', Arial, sans-serif;*/
+  font-family: 'Open Sans';
+  color: gray;
   font-size: 36;
 }
 
-#framecontainer {
-  position: absolute;
-  top:0;
-  left:0;
-  /*max-width: 100000000px;*/
-  /*width: 100000px;*/
-  height:110%; /* 10% larger to hide scrollbar */
-  width:100%;
-
-  overflow-x: scroll;
-  overflow-y: hidden;
-  box-sizing: border-box;
-  white-space: nowrap;
-  /*pointer-events: none;*/
-
+img.lamp {
+  padding-top: 15vh;
+  padding-right: 2px;
+  max-height: 70%;
 }
 
-.framepadding {
-  height:100%;
-  width:25vw;
-  display: inline-block;
-  vertical-align: middle;
+.nav_container {
+  position: fixed;
+  bottom:0;
+  /*height: 100%;*/
+  z-index: 2;
+  /*width: 72px;*/
+  /*background-color: white;*/
 }
 
-.frame {
-  height:100%;
-  width:500px;
-  display: inline-block;
-  vertical-align: middle;
-
-  /*background-color: red;*/
-  /*border: 1px solid;*/
+table.nav_menu {
+  /*border-collapse: collapse;*/
+  /*position: fixed;*/
+  /*left: 0px;*/
+  /*background-color: white;*/
 }
-.innerframe {
-  position: relative;
-  width: 50%;
-  height: 50%;
-  top: 25%;
-  /*background-color: blue;*/
-  margin: 0 auto;
-  cursor: -webkit-grab;
-  /*cursor: -webkit-grabbing;*/
+table, th, td {
+  /*border: 3px solid white;*/
+  /*border-bottom: 1px solid gray;*/
 }
 
-.pics, .buy {
-  position: relative;
-  width: 25px;
-  height: 25px;
-  /*background-color: green;*/
-  bottom: -30%;
-  left: 80%;
-  margin: 5px;
-  float: left;
+td.active {
+  border: 3px solid gray;
 }
 
-.pics {
-  cursor: pointer;
+.nav_ui {
+  width: 64px;
+  height: 64px;
 }
-
-.buy {
-  cursor: copy;
-}
-/*
-.padding {
-  height: 600px;
+/*.nav_ui.selected {
+  border-color: black;
 }*/
-
-.lamp {
-  /*background-color: red;*/
-  /*display:inline-block;*/
-  /*cursor: pointer;*/
-  /*vertical-align: middle;*/
-  /*border: 1px solid;*/
-}
 /*
-.lamp.desk {
-  min-width: 400px;
-  /*max-width: 800px;*/
-  height: 75%;
-  /*margin-top: 25%;*/
-  width: 100vw;
-}
-
 @media screen and (min-width: 600px) {
     .lamp.desk {
         max-width: 800px;
@@ -150,5 +111,4 @@ body {
   border-top : 1px dashed;
   border-bottom : 1px dashed;
 }
-
 */

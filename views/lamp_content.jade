@@ -1,0 +1,6 @@
+mixin lamp_content(lamp_images)
+    .lamp_container
+        img.lamp.lead(src=lamp_images[0])
+        - for (var i = 1; i < lamp_images.length; ++i) {
+          img.lamp(src=lamp_images[i])
+        - }

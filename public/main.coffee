@@ -1,146 +1,42 @@
-lastMouse = {x:0, y:0}
+$ ->
+    $('.nav_ui').click () ->
+        i = Number($(@).data('i'))
+        make_active($(@).parent())
+        move_scroll_to(i)
 
-perc_div = (event, $) ->
-  offset = $.offset()
-  relX = event.pageX - offset.left
-  relY = event.pageY - offset.top
-
-  percX = relX / $.width()
-  percY = relY / $.height()
-  return { percX, percY }
+    on_resize()
+    $(window).resize(on_resize)
+    on_scroll()
+    $('#scroll_container').scroll(on_scroll)
 
 
-bindMouseMoveRotate = ($frames) ->
-  return
-  $frames.mousemove (event) ->
-    id = $(@).data().id
-    object = objects[id]
-    # Dont trigger mousemove if only page scrolled.
-    if lastMouse.x == event.screenX and lastMouse.y == event.screenY
-      return
+on_scroll = () ->
+    $td = $('.nav_menu').find('td')
+    $('.lamp_container').each (i) ->
+        if percent_of_screen($(@)) >= .5
+            make_active($td.eq(i))
 
-    lastMouse.x = event.screenX
-    lastMouse.y = event.screenY
+percent_of_screen = ($lamp_container) ->
+    scroll = $('#scroll_container').scrollLeft()
+    w_width = $(window).width()
+    screen_left = $lamp_container.position().left
+    screen_right = screen_left + $lamp_container.first().width()
 
-    { percX, percY } = perc_div event, $(@)
-    object.rotation.y = (percX)* Math.PI
-    object.rotation.z = (((percY - 0.50)/4) * Math.PI)
-    # obj.default_rotation.y = if percX > .5 then Math.PI else 0
+    left = if screen_left < 0 then 0 else screen_left
+    right = if screen_right < w_width then screen_right else w_width
 
-bindScrollShow = () ->
-  $lamps = $('.lamp.3d')
-  margin = 0
+    return Math.min((right - left) / w_width, 1)
 
-  $('.scrollcontainer').scroll (event) ->
-    $lamps.each () ->
-      showLeft = $(@).offset().left + $(@).width() > margin
-      showRight = $(@).offset().left < $(window).width() - margin
+make_active = ($td) ->
+    $('.active').removeClass 'active'
+    $td.addClass 'active'
 
-      if not(showLeft and showRight)
-        # if $(@).hasClass 'active'
-        $(@).removeClass 'active'
-      else # is active
-        if not ($(@).hasClass('active') and $(@).hasClass('viewer'))
-          # viewer object on non active lamp
-          source = $('.lamp.3d.viewer').not('.active').first()
-          viewer = source.data('viewer')
-          if viewer
-            source.removeClass 'viewer'
-            source.data('viewer', null)
-            viewer.$parent = $(@)
-            viewer.moveToParent()
-            $(@).data('viewer', viewer)
-            $(@).addClass 'viewer'
+move_scroll_to = (i) ->
+    $lamp_container = $('.lamp_container').eq(i)
+    scroll_amount = $('#scroll_container').scrollLeft()
+    $('#scroll_container').scrollLeft(scroll_amount + $lamp_container.offset().left)
 
-        $(@).addClass 'active'
-
-bindResetOnScroll = ($lamps) ->
-  # $('.scrollcontainer').scroll (event) ->
-  #   $lamps.each () ->
-  #     viewer = $(@).data 'viewer'
-  #     viewer.reset() if viewer.loaded and not viewer.animating
-
-  $lamps.mouseout () ->
-    viewer = $(@).data 'viewer'
-    viewer.reset() if viewer.loaded and not viewer.animating
-
-class Lamp
-  constructor: (@path, @type, @rx=0, @ry = 0, @rz = 0) ->
-    # console.log @ry
-    # @rx = rx
-    # @ry = ry
-    # @rz = rz
-
-lamps = [
-  new Lamp('lamps/desk_0/desk0.obj', 'desk', 0, -Math.PI/2),
-
-  new Lamp('lamps/desk_1/desk1.obj', 'desk', 0, -Math.PI/2),
-  new Lamp('lamps/desk_2/desk2.obj', 'desk', 0, -Math.PI/2),
-  new Lamp('lamps/desk_3/desk3.obj', 'desk', 0, -Math.PI/2),
-  new Lamp('lamps/desk_4/desk4.obj', 'desk', 0, -Math.PI/2),
-  new Lamp('lamps/desk_5/desk5.obj', 'desk', 0, -Math.PI/2),
-
-  new Lamp('lamps/wall_0/wall0.obj', 'wall', 0, 2*Math.PI),
-  new Lamp('lamps/wall_1/wall1.obj', 'wall', 0, 2*Math.PI/2),
-  new Lamp('lamps/wall_2/wall2.obj', 'wall', 0, 2*Math.PI/2),
-  new Lamp('lamps/wall_3/wall3.obj', 'wall', 0, 2*Math.PI/2),
-  new Lamp('lamps/wall_4/wall4.obj', 'wall', 0, 2*Math.PI/2),
-  new Lamp('lamps/wall_5/wall5.obj', 'wall', 0, 2*Math.PI/2),
-
-]
-
-addLampPadding = (id) ->
-  $frame = $('<div class="frame"></div>')
-  $frame.append($('<div class="innerframe"></div>'))
-
-  # $frame.append($('<div class="pics"></div>'))
-  # $frame.append($('<div class="buy"></div>'))
-  $frame.append($('<img class="pics" src="imgs/picture1.svg">'))
-  # $frame.append($('<img class="buy" src="imgs/gift.svg">'))
-
-  $frame.children('.innerframe').data 'id': id
-  $('#framecontainer').append($frame)
-
-main = () ->
-  id = 0
-  for lamp in lamps
-    addLampPadding(id)
-    id += 1
-
-  $("#framecontainer").mousewheel (event, delta) ->
-    $(@).scrollLeft @scrollLeft - delta
-    # $('#scrollcontainer').scrollTop $('#framecontainer').scrollLeft()
-  #    $('#framecontainer')[0].scrollLeft -= delta
-    # console.log event
-    # $('#scrollcontainer').trigger 'mousewheel', event
-
-  # Connect vertical scrolling of page to horizontal scrolling of frames.
-  # $('#scrollcontainer').scroll (event) ->
-  #   $('#framecontainer').scrollLeft $('#scrollcontainer').scrollTop()
-
-  # Frame container has a padding at beginning and end.
-  $('#framecontainer').append $('<div class="framepadding">')
-
-  # $('.innerframe').mousemove (event) ->
-  #   tumble $(@).data().i, even
-
-  $('.framepadding').width $(window).width()/2 - 300
-
-  init(lamps)
-  animate()
-
-  bindMouseMoveRotate $('.innerframe')
-
-  # bindScrollRotate()
-  # bindScrollShow()
-  # bindScrollSnap()
-  # bindResize()
-  # center $lamps.first()
-
-    # $lamp.on 'touchmove', ( event ) ->
-    #   { percX, percY } = perc_div event.originalEvent.touches[0], $lamp
-    #   viewer.rotation.y = (percX)* Math.PI
-    #   viewer.rotation.z = (((percY - 0.50)/4) * Math.PI)
-    #   viewer.default_rotation.y = if percX > .5 then Math.PI else 0
-    #   event.preventDefault()
-    #   event.stopPropagation()
+on_resize = () ->
+    h = $(window).width()
+    $nav = $('.nav_container')
+    $nav.css('left', h/2 - $nav.width()/2)
