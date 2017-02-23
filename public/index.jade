@@ -1,5 +1,8 @@
-include lamp_content
+include partials/lamp_content
 doctype html
+-
+
+
 html
     head
         //- title Studio Simon Lamps
@@ -18,14 +21,14 @@ html
 
 
         #scroll_container
-            for lamp in lamps
+            for lamp in public._data
                 +lamp_content(lamp)
 
         #footer
             a.joel_link(target="_blank" href="http://joelsimon.net") By Joel
             .nav_container
                 table.nav_menu
-                    each lamp, i in lamps
+                    each lamp, i in public._data
                         - path = '/imgs/lamps/' + lamp.icon
                         td(class = (i == 0 ? 'active' : undefined))
                             img.nav_ui(src=path, data-i=i)
