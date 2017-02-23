@@ -5,9 +5,8 @@ html
         //- title Studio Simon Lamps
         script(src='/libs/jquery.js')
         script(src='/main.js')
-        //- script(src='/libs/jquery.randomize.js')
-        //- script(src='/libs/packery.js')
         link(rel='stylesheet', href='/style/main.css')
+
         //- script(src='/libs/three.min.js')
         //- script(src='/libs/OBJLoader.js')
         //- script(src='/libs/tween.js')
@@ -23,8 +22,10 @@ html
                 +lamp_content(lamp)
 
         #footer
+            a.joel_link(target="_blank" href="http://joelsimon.net") By Joel
             .nav_container
                 table.nav_menu
                     each lamp, i in lamps
-                        td
-                            img.nav_ui(src='/imgs/lamps/icon.png', data-i=i)
+                        - path = '/imgs/lamps/' + lamp.icon
+                        td(class = (i == 0 ? 'active' : undefined))
+                            img.nav_ui(src=path, data-i=i)

@@ -1,6 +1,8 @@
-mixin lamp_content(lamp_images)
+mixin lamp_content(lamp)
     .lamp_container
-        img.lamp.lead(src=lamp_images[0])
-        - for (var i = 1; i < lamp_images.length; ++i) {
-          img.lamp(src=lamp_images[i])
-        - }
+        a.lamp_name.vertical-text(name="#") #{lamp.name}
+        .lamp_images
+            img.lamp.lead(src='/imgs/lamps/'+lamp.lead)
+            - for (var i = 0; i < lamp.images.length; ++i) {
+                img.lamp(src='/imgs/lamps/'+lamp.images[i])
+            - }

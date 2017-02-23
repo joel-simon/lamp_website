@@ -1,4 +1,4 @@
-/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
 
 html {
   height: 100%;
@@ -26,9 +26,16 @@ body {
 }
 
 .lamp_container {
-  height: 100%;
+  /*top: 0px;*/
+  /*height: 100%;*/
   position: relative;
   display: inline-block; /*For scrolling.*/
+}
+
+a.lamp_name {
+  color: gray;
+  font-size: 36px;
+  padding-top: 4vw;
 }
 
 .lamp {
@@ -36,7 +43,7 @@ body {
 }
 
 .lamp.lead {
-  padding-left: 5vw;
+  padding-left: 100px;
   max-width: 50vw;
 }
 
@@ -56,59 +63,92 @@ body {
   text-align: center;
   padding-right: 15px;
   color: black;
-  /*font-family: 'Arial Narrow', Arial, sans-serif;*/
   font-family: 'Open Sans';
   color: gray;
-  font-size: 36;
+  /*font-size: 36;*/
+
+}
+
+p, a {
+  font-family: 'Open Sans';
 }
 
 img.lamp {
-  padding-top: 15vh;
   padding-right: 2px;
-  max-height: 70%;
+  max-height: 70vh;
+  /*max-width: 50vw;*/
+}
+
+#footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  /*background-color: green;*/
 }
 
 .nav_container {
-  position: fixed;
-  bottom:0;
-  /*height: 100%;*/
   z-index: 2;
-  /*width: 72px;*/
-  /*background-color: white;*/
 }
 
+
+/*
+  Footer.
+*/
 table.nav_menu {
+  margin: auto;
   /*border-collapse: collapse;*/
-  /*position: fixed;*/
-  /*left: 0px;*/
-  /*background-color: white;*/
 }
 table, th, td {
-  /*border: 3px solid white;*/
-  /*border-bottom: 1px solid gray;*/
+}
+
+td {
+  /*padding: 3px;*/
+  cursor: pointer;
+  padding: 0px;
+  border: 1px solid transparent;
 }
 
 td.active {
-  border: 3px solid gray;
+  border: 1px solid gray;
 }
 
 .nav_ui {
-  width: 64px;
-  height: 64px;
+  width: 8vh;
+  height: 8vh;
 }
+
+a.joel_link {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  color: gray;
+  /*font-size: 5vw;*/
+  /*font-size: calc(20px + 1.2vw);*/
+  font-size: 20px;
+  text-decoration: none;
+}
+a.joel_link {
+    color: gray;
+}
+
+.vertical-text {
+  transform:  rotate(-90deg) translateX(-100%);
+  transform-origin:left top;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+}
+
 /*.nav_ui.selected {
   border-color: black;
 }*/
-/*
-@media screen and (min-width: 600px) {
-    .lamp.desk {
-        max-width: 800px;
-        width: 75vw;
-    }
+
+@media (max-width: 400px) {
+  /*a.joel_link {
+    font-size: 32px;
+    background-color: green;
+  }*/
 }
 
-.lamp.open {
-  border-top : 1px dashed;
-  border-bottom : 1px dashed;
-}
-*/
