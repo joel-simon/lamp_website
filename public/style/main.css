@@ -82,7 +82,7 @@ img.lamp {
 #footer {
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: 3px;
   left: 0px;
   /*background-color: green;*/
 }
@@ -106,11 +106,14 @@ td {
   /*padding: 3px;*/
   cursor: pointer;
   padding: 0px;
-  border: 1px solid transparent;
+  /*border: 1px solid transparent;*/
+  border-top: 3px solid transparent;
 }
 
 td.active {
-  border: 1px solid gray;
+  border-top: 3px solid gray;
+  /*border-left: 1px solid gray;*/
+  /*border-right: 1px solid gray;*/
 }
 
 .nav_ui {

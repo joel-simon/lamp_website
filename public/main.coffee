@@ -1,26 +1,37 @@
 window.hash_to_index = {}
 window.index_to_hash = {}
 window.images_loaded = false
+
 $ ->
     is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
 
+    # Allow navigation input.
     $('.nav_ui').click () ->
         i = Number($(@).data('i'))
         move_scroll_to(i)
 
+    # Bind resize and scroll events.
     on_resize()
     $(window).resize(on_resize)
     on_scroll()
     $('#scroll_container').scroll(on_scroll)
 
-
+    # Create hashes from lamp names.
     $('.lamp_container').each (i) ->
         name = $(@).find('a.lamp_name').text()
         hash = '#'+name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase()
         hash_to_index[hash] = i
         index_to_hash[i] = hash
 
-    # When images have loaded.
+    # Resize the window as images load.
+    $('img').load () ->
+        on_resize()
+
+    # Enable vertical mousewheel input on scroll_container/
+    $('#scroll_container').mousewheel (event, delta) ->
+        $(@).scrollLeft (@scrollLeft - delta)
+
+    # When all images have loaded.
     $(window).on "load", () ->
         window.images_loaded = true
         on_resize()
