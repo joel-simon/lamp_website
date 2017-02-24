@@ -36,6 +36,7 @@ a.lamp_name {
   color: gray;
   font-size: 36px;
   padding-top: 4vw;
+  cursor: pointer;
 }
 
 .lamp {
@@ -61,13 +62,13 @@ a.lamp_name {
 #header h1 {
   display:block;
   text-align: center;
-  padding-right: 15px;
   color: black;
   font-family: 'Open Sans';
   color: gray;
-  /*font-size: 36;*/
-
+  font-size: 36px;
+  cursor: pointer;
 }
+
 
 p, a {
   font-family: 'Open Sans';
@@ -97,21 +98,17 @@ img.lamp {
 */
 table.nav_menu {
   margin: auto;
-  /*border-collapse: collapse;*/
-}
-table, th, td {
 }
 
-td {
-  /*padding: 3px;*/
+
+td img {
   cursor: pointer;
   padding: 0px;
-  /*border: 1px solid transparent;*/
-  border-top: 3px solid transparent;
+  border-top: 2px solid transparent;
 }
 
-td.active {
-  border-top: 3px solid gray;
+td.active img {
+  border-top: 2px solid gray;
   /*border-left: 1px solid gray;*/
   /*border-right: 1px solid gray;*/
 }
@@ -121,18 +118,18 @@ td.active {
   height: 8vh;
 }
 
-a.joel_link {
+#footer a {
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 8px;
   color: gray;
-  /*font-size: 5vw;*/
-  /*font-size: calc(20px + 1.2vw);*/
   font-size: 20px;
   text-decoration: none;
 }
-a.joel_link {
-    color: gray;
+#footer a.joel_link {
+  bottom: 30px;
+}
+#footer a.contact {
+  bottom: 5px;
 }
 
 .vertical-text {
@@ -143,15 +140,76 @@ a.joel_link {
   box-sizing: border-box;
   position: absolute;
 }
+h1:hover {
+  /*text-decoration: none;*/
+  text-decoration: underline;
+}
+a:hover, #footer a:hover {
+  text-decoration: underline;
+}
+
 
 /*.nav_ui.selected {
   border-color: black;
 }*/
 
-@media (max-width: 400px) {
-  /*a.joel_link {
+/*@media (max-height: 500px) {
+  #header h1 {
+    margin: 0px;
+  }
+  a.joel_link {
     font-size: 32px;
     background-color: green;
-  }*/
+  }
+}*/
+
+/* ----------- iPhone 5 & 6 ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+    #header h1 {
+      font-size: 72px;
+    }
+    #footer a {
+      font-size: 40px
+    }
+    #footer a.joel_link {
+      bottom: 60px
+    }
+    a.lamp_name {
+      font-size: 72px;
+    }
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+  #header h1 {
+    margin: 0px;
+  }
+  .nav_ui {
+    /*padding-left: 30px;*/
+    width: 10vh;
+    height: 10vh;
+  }
+  td {
+    padding-right: 20px;
+  }
+
 }
 

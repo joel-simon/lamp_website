@@ -4,6 +4,7 @@ window.images_loaded = false
 
 $ ->
     is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+    query = window.location.search
 
     # Allow navigation input.
     $('.nav_ui').click () ->
@@ -16,39 +17,98 @@ $ ->
     on_scroll()
     $('#scroll_container').scroll(on_scroll)
 
+    history.pushState({'scrollLeft': 0}, "", "/")
+
     # Create hashes from lamp names.
     $('.lamp_container').each (i) ->
         name = $(@).find('a.lamp_name').text()
-        hash = '#'+name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase()
-        hash_to_index[hash] = i
-        index_to_hash[i] = hash
+        path = '/'+name_to_path(name)
+        hash_to_index[path] = i
+        index_to_hash[i] = path
+
+    $('.lamp_container').each (i) ->
+        $(@).find('a.lamp_name').on 'click touch', () ->
+            open_lamp_container(i)
+
+    $(window).on 'popstate', (e) ->
+        lamp_idx = e.originalEvent?.state?.lamp_idx
+        if lamp_idx?
+            open_lamp_container(lamp_idx)
+
+        old_scroll = e.originalEvent.state?.scrollLeft
+        if old_scroll?
+            $('.lamp_container').show()
+            $('#scroll_container').scrollLeft(old_scroll)
+            $('.nav_container').show()
 
     # Resize the window as images load.
     $('img').load () ->
         on_resize()
 
     # Enable vertical mousewheel input on scroll_container/
-    $('#scroll_container').mousewheel (event, delta) ->
-        $(@).scrollLeft (@scrollLeft - delta)
+    unless is_mobile # Causes scroll stuttering on mobile.
+        $('#scroll_container').mousewheel (event, delta) ->
+            if Math.abs(event.deltaY) > Math.abs(event.deltaX)
+                $(@).scrollLeft (@scrollLeft - delta)
 
     # When all images have loaded.
     $(window).on "load", () ->
         window.images_loaded = true
         on_resize()
-        hash = document.location.hash
+        hash = document.location.pathname
         if hash_to_index[hash]?
-            move_scroll_to(hash_to_index[hash])
+            open_lamp_container(hash_to_index[hash])
+            # move_scroll_to(hash_to_index[hash])
         else
             console.log 'no hash', document.location.hash
             document.location.hash = ''
+
+    $('#header h1').on 'click touch', () ->
+        if window.location.pathname == '/'
+            $('#scroll_container').scrollLeft(0)
+        else
+            window.location.pathname = '/'
+
+    regex = new RegExp("(lamp=)([^&#]*)")
+    if regex.test(query)
+        results = regex.exec(query)
+        idx = +results[2]
+        if Number.isInteger(idx)
+            open_lamp_container(idx)
+        else
+            throw 'Invalid lamp query' + results
+
+
+
+open_lamp_container = (i) ->
+    # console.log 'open', i
+
+    $lamp_container = $('.lamp_container').eq(i)
+    name = $lamp_container.data('name')
+
+    # Switch header and lamp name.
+    # $('#footer').append($lamp_container.find('a.lamp_name'))
+
+    stateData = { 'scrollLeft': $('#scroll_container').scrollLeft()}
+    window.history.replaceState(stateData, '', '/')
+    history.pushState({'lamp_idx': i},  null, name_to_path(name))
+
+    $('.lamp_container').not($lamp_container).hide()
+    $('#scroll_container').scrollLeft(0)
+    $('.nav_container').hide()
+
+# close_lamp_container = (scroll_position) ->
+
+name_to_path = (name) ->
+    name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase()
 
 on_scroll = () ->
     return unless window.images_loaded
 
     make_active = (i) ->
-        console.log i, index_to_hash[i]
+        # console.log i, index_to_hash[i]
         $td = $('.nav_menu').find('td').eq(i)
-        window.location.hash = index_to_hash[i]
+        # window.location.hash = index_to_hash[i]
         $('.active').removeClass 'active'
         $td.addClass('active')
 

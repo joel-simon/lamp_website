@@ -1,0 +1,18 @@
+html
+    head
+        script(type='text/javascript').
+            function name_to_path(name){
+                return (name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase())
+            }
+
+            lamps = !{JSON.stringify(public._data)}
+
+            for (i in lamps) {
+                path = name_to_path(lamps[i].name)
+                if (window.location.pathname == '/'+path){
+                    document.location = "/?lamp="+i
+                }
+            }
+
+    body
+        h1 404 Not Found

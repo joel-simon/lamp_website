@@ -1,7 +1,5 @@
 include partials/lamp_content
 doctype html
--
-
 
 html
     head
@@ -19,8 +17,9 @@ html
         //- script(src='/ModelViewer.js')
 
     body
-        #header
-            h1 Simon Lamp Studio
+        #header(style="text-align: center")
+            .horizontally_centered(style="display: inline-block")
+                h1 Simon Lamp Studio
 
 
         #scroll_container
@@ -28,7 +27,8 @@ html
                 +lamp_content(lamp)
 
         #footer
-            a.joel_link(target="_blank" href="http://joelsimon.net") By Joel
+            a.joel_link(target="_blank" href="http://joelsimon.net") Joel
+            a.contact(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
             .nav_container
                 table.nav_menu
                     each lamp, i in public._data

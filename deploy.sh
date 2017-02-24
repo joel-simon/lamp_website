@@ -1,2 +1,2 @@
 harp compile
-gcloud app deploy
+gcloud app deploy -v 1
