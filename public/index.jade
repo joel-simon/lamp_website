@@ -21,9 +21,17 @@ html
         //- script(src='/model_viewer.js')
 
     body
-        #header(style="text-align: center")
+        #header(style="text-align: center;")
             .horizontally_centered(style="display: inline-block")
                 h1 Simon Lamp Studio
+
+            h2.about: a(href="/about") about
+        //- #right_header(style="text-align: right;")
+            //- .right(style="display: inline-block")
+
+
+            //- .about(style="display: inline-block;text-align: right;color:gray;")
+            //-     h3 about
 
         #scroll_container
             for lamp in public._data

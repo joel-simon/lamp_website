@@ -37,10 +37,14 @@ a.lamp_name {
   cursor: pointer;
 }
 
+/*
+HEADER
+*/
+
 #header {
   position: fixed;
   width: 100%;
-  top: 0px;
+  /*top: 0px;*/
   left: 0px;
   z-index: 2;
 }
@@ -53,7 +57,30 @@ a.lamp_name {
   color: gray;
   font-size: 36px;
   cursor: pointer;
+  margin: 0px;
 }
+
+h2.about {
+  position: fixed;
+  z-index: 3;
+  right: 3vw;
+
+  top: 15px;
+  margin: 0px;
+}
+
+h2.about a {
+  font-family: 'Open Sans';
+  color: gray;
+  text-decoration: none;
+}
+
+h2.about a:hover {
+ text-decoration: underline;
+}
+/*
+HEADER
+*/
 
 #image_wrapper {
   position: fixed;
@@ -63,7 +90,6 @@ a.lamp_name {
   height: 99vh;
   background-color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
-  /*margin: 5px;*/
   z-index: 3;
 }
 
@@ -82,6 +108,7 @@ a.lamp_name {
   max-height: 100%;
   height: auto;
 }
+
 #image_wrapper img.tall {
   zoom: 2;
   max-height: 100%;
@@ -115,6 +142,7 @@ p, a {
 }
 
 img.lamp:not(.lead) {
+  /*zoom: 2;*/
   cursor: pointer;
 }
 
@@ -184,6 +212,7 @@ td.active img {
   box-sizing: border-box;
   position: absolute;
 }
+
 h1:hover {
   /*text-decoration: none;*/
   text-decoration: underline;
@@ -235,9 +264,17 @@ canvas {
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: portrait) {
+
     #header h1 {
       font-size: 72px;
     }
+
+    h2.about {
+      position: static;
+      font-size: 3em;
+      margin-top: 25px;
+    }
+
     #footer a {
       font-size: 40px
     }
