@@ -2,6 +2,13 @@ window.hash_to_index = {}
 window.index_to_hash = {}
 window.images_loaded = false
 
+class Lamp
+  constructor: (@path, @type, @rx=0, @ry = 0, @rz = 0) ->
+    # if @type == 'wall'
+    #   @width = 300
+    # else
+    #   @width = 400
+
 $ ->
     is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
     query = window.location.search
@@ -42,7 +49,7 @@ $ ->
             $('.nav_container').show()
 
     # Resize the window as images load.
-    $('img').load () ->
+    $('.lamp').load () ->
         on_resize()
 
     # Enable vertical mousewheel input on scroll_container/
@@ -78,7 +85,16 @@ $ ->
         else
             throw 'Invalid lamp query' + results
 
+    $('img.lamp').not('.lead').click () ->
+        $('#image_wrapper').show()
+        $('#image_wrapper img').attr 'src', $(@).attr('src')
+        if $(@).width() > $(@).height()
+            $('#image_wrapper img').removeClass('tall').addClass('wide')
+        else
+            $('#image_wrapper img').removeClass('wide').addClass('tall')
 
+    $('#image_wrapper').click () ->
+        $(@).hide()
 
 open_lamp_container = (i) ->
     # console.log 'open', i

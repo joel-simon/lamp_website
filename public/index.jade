@@ -12,26 +12,33 @@ html
         link(rel='stylesheet', href='/style/main.css')
 
         //- script(src='/libs/three.min.js')
+        //- script(src='/libs/OrbitControls.js')
+
         //- script(src='/libs/OBJLoader.js')
+        //- script(src='/multiple_viewer.js')
+
         //- script(src='/libs/tween.js')
-        //- script(src='/ModelViewer.js')
+        //- script(src='/model_viewer.js')
 
     body
         #header(style="text-align: center")
             .horizontally_centered(style="display: inline-block")
                 h1 Simon Lamp Studio
 
-
         #scroll_container
             for lamp in public._data
                 +lamp_content(lamp)
 
+
         #footer
-            a.joel_link(target="_blank" href="http://joelsimon.net") Joel
-            a.contact(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
+            //- a.joel_link(target="_blank" href="http://joelsimon.net") Joel
+            //- a.contact(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
             .nav_container
                 table.nav_menu
                     each lamp, i in public._data
                         - path = '/imgs/lamps/' + lamp.icon
                         td(class = (i == 0 ? 'active' : undefined))
                             img.nav_ui(src=path, data-i=i)
+
+        #image_wrapper(style="display:none")
+            img()

@@ -26,8 +26,6 @@ body {
 }
 
 .lamp_container {
-  /*top: 0px;*/
-  /*height: 100%;*/
   position: relative;
   display: inline-block; /*For scrolling.*/
 }
@@ -35,28 +33,16 @@ body {
 a.lamp_name {
   color: gray;
   font-size: 36px;
-  padding-top: 4vw;
+  padding-top: 45px;
   cursor: pointer;
-}
-
-.lamp {
-  vertical-align: middle;
-}
-
-.lamp.lead {
-  padding-left: 100px;
-  max-width: 50vw;
 }
 
 #header {
   position: fixed;
-  /*background-color: gray;*/
   width: 100%;
-  /*background: solid;*/
   top: 0px;
   left: 0px;
   z-index: 2;
-  /*border-bottom: 3px solid;*/
 }
 
 #header h1 {
@@ -69,15 +55,67 @@ a.lamp_name {
   cursor: pointer;
 }
 
+#image_wrapper {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 99vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  /*margin: 5px;*/
+  z-index: 3;
+}
+
+#image_wrapper img {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#image_wrapper img.wide {
+  zoom: 2;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+#image_wrapper img.tall {
+  zoom: 2;
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+}​
 
 p, a {
   font-family: 'Open Sans';
 }
 
-img.lamp {
+.model_container {
+  width: 500px;
+  height: 800px;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 100px;
+}
+
+.lamp {
   padding-right: 2px;
   max-height: 70vh;
-  /*max-width: 50vw;*/
+  vertical-align: middle;
+
+}
+.lamp.lead {
+  padding-left: 130px;
+  padding-right: 40px;
+  max-width: 40vw;
+  max-height: 65vh;
+}
+
+img.lamp:not(.lead) {
+  cursor: pointer;
 }
 
 #footer {
@@ -100,6 +138,12 @@ table.nav_menu {
   margin: auto;
 }
 
+td {
+  padding-right: 3vw;
+}
+td:last-of-type {
+  padding-right: 0vw;
+}
 
 td img {
   cursor: pointer;
@@ -148,6 +192,18 @@ a:hover, #footer a:hover {
   text-decoration: underline;
 }
 
+canvas {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  /*z-index: 999;*/
+}
+.scene {
+  width: 100%;
+  height: 100%;
+}
 
 /*.nav_ui.selected {
   border-color: black;
