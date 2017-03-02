@@ -3,13 +3,114 @@ doctype html
 html
     head
         script(src='/libs/jquery.js')
-        link(rel='stylesheet', href='/style/main.css')
-    body
-        #header(style="text-align: center")
-            .horizontally_centered(style="display: inline-block")
-                h1 About Simon Lamp Studio
 
-        p.
-            a design lineage of lamps that each consist of a box with a curve. The box is the weight and mass while the supporting curve provides the movement and energy. However, the mass’s material is light and airy (Kozo paper) while the movements material is solid (cherry wood). The box is static while the curve is dynamic. The form is abstract while the materials are natural. The balance of these contrasts is what I strive for in each design and what I believe gives them sculptural integrity. I see these lamps as a synthesis of the simplicity and energy of mid century modern furniture with the elegance and naturalistic character of traditional Japanese architecture and materials. Several subclasses of lamps are formed by rotating the box 90 degrees along any axis.
-        p.
-            The form of the light is a critical issue. Many existing box or rice paper lamps contain one or more halogen bulbs inside. Once on, these visually disrupt the forms and decouple them from the function of the light. The boxes become a cage that entomb a light point creating a nested hierarchy of forms. You cannot look at or appreciate the form without your eye being drawn to the bulb within. LED strips are both more environmentally friendly and break the restriction of circular enclosures for homogenous light. The result is no longer a paper cage for a light, like a firefly in a jar, but a box whose essence is bright.
+        script(src='/libs/three.min.js')
+        script(src='/libs/OBJLoader.js')
+        script(src='/libs/tween.js')
+        script(src='/model_viewer.js')
+        script(src='/about.js')
+
+
+        link(rel='stylesheet', href='/style/main.css')
+        link(rel='stylesheet', href='/style/about.css')
+    body
+
+        #header(style="text-align: center;")
+            .horizontally_centered(style="display: inline-block")
+                h1.hover_underline About
+
+            h2.about: a(href="/index.html") Main
+
+        .section(style="padding-bottom:0px;")
+            p.
+                A lineage of lamps that each consist of a box with a curve. Three box orientations create desk, table and wall lamps.
+            p.
+                These lamps are great -  really fantastic. Never seen such good lamps. Everyone loves them. I hear things, so many things about them.
+        .section.models
+            //- h2 Box + Curves
+
+            #model_scroll_container
+                #scroll
+
+            #canvas_container
+
+            //- .column_container
+            //-     .column.column-left
+            //-         h4 Desk
+            //-         p Box = 4" x 10.5" x 2.5"
+            //-     .column.column-center
+            //-         h4 Wall
+            //-         p Box = 8" x 42" x 5"
+            //-     .column.column-right
+            //-         h4 Table
+            //-         p Box = 21" x 2.5" x 8"
+
+
+
+        .section(style="padding-bottom:0px;")
+            h2 Foo
+            p.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+            //- p.
+                A lineage of lamps that each consist of a box with a curve. The box is the mass while the supporting curve provides the movement and energy. material of the box is is light and airy (Kozo paper) while the curve is solid (cherry wood). The box is static while the curve is dynamic. The form is abstract while the materials are natural. The balance of these contrasts is what I strive for in each design and what I believe gives them sculptural integrity.
+                I see these lamps as a synthesis of the simplicity and energy of mid century modern furniture with the elegance and naturalistic character of traditional Japanese architecture and materials. Several subclasses of lamps are formed by rotating the box 90 degrees along any axis.
+
+            //- .column_container
+            //-     .column.column-left
+            //-         p Box = 4" x 10.5" x 2.5"
+            //-     .column.column-center
+            //-         p Box = 8" x 42" x 5"
+            //-     .column.column-right
+            //-         p Box = 21" x 2.5" x 8"
+
+        .section.materials
+            h2 Materials
+
+            //- .foo(style='height:150px;')
+            //-     //- .left(style='float:left;height:150px;')
+            //-     img(src='/imgs/CherryLight.jpg')
+            //-     h4 Cherry Wood
+            //-     p The Desk lamps use laminated Cherry wood veneer.
+            //- .foo(style='height:150px;')
+            //-     .left(style='float:left;height:150px;')
+            //-         img(src='/imgs/CherryLight.jpg')
+            //-         h4 Cherry Wood
+            //-     p The Desk lamps use laminated Cherry wood veneer.
+
+            .column_container2
+                .column2
+                    img(src='/imgs/CherryLight.jpg')
+                    h4 Cherry Wood
+                    p The Desk lamps use laminated Cherry wood veneer.
+
+                .column2
+                    img(src='/imgs/leds.jpg')
+                    h4 LED's
+                    p A segment of 12V LED's are used in every lamp.
+
+                //- .column_container2
+
+                .column2
+                    img(src='/imgs/acrylic.jpg')
+                    h4 Acrylic
+                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+
+                .column2
+                    img(src='/imgs/paper.jpg')
+                    h4 Paper
+                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+
+
+
+            //- p.
+            //-     The form of the light is a critical issue. Many existing box or rice paper lamps contain one or more halogen bulbs inside. Once on, these visually disrupt the forms and decouple them from the function of the light. The boxes become a cage that entomb a light point creating a nested hierarchy of forms. You cannot look at or appreciate the form without your eye being drawn to the bulb within. LED strips are both more environmentally friendly and break the restriction of circular enclosures for homogeneous light. The result is no longer a paper cage for a light, like a firefly in a jar, but a box whose essence is bright.
+        .section
+            h2 Joel
+            p Joel lives in New York City. He has been thinking about lamps since high-school. He currently works at Rockefeller University. His other interests include figure sculpture, computational design and other miscellaneous projects.
+            .links(style="text-align: center;")
+                a(href="http://joelsimon.net", target="_blank") Other Work By Joel
+                br
+                a(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
+
+        #about_footer(style="padding-bottom:50px")

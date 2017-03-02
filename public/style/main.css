@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:100, 300, 400');
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');*/
 html {
   height: 100%;
   overflow: hidden;
@@ -8,6 +9,11 @@ html {
 body {
   height: 100%;
   overflow: hidden;
+  margin: 0;
+}
+
+h2 {
+  font-size: 24px;
 }
 
 #scroll_container {
@@ -26,14 +32,23 @@ body {
 }
 
 .lamp_container {
+  margin-left: 200px;
   position: relative;
   display: inline-block; /*For scrolling.*/
 }
 
+* {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: lighter;
+}
+
+p {
+  font-weight: normal;
+}
+
 a.lamp_name {
-  color: gray;
   font-size: 36px;
-  padding-top: 45px;
+  left: calc(-100px + 0px);
   cursor: pointer;
 }
 
@@ -42,41 +57,47 @@ HEADER
 */
 
 #header {
-  position: fixed;
+  position: relative; /* this is only to make z-index work with scroll container */
   width: 100%;
   /*top: 0px;*/
   left: 0px;
   z-index: 2;
+  margin-top: 2vh;
 }
 
 #header h1 {
   display:block;
   text-align: center;
-  color: black;
-  font-family: 'Open Sans';
-  color: gray;
-  font-size: 36px;
+  font-size: 48px;
   cursor: pointer;
   margin: 0px;
 }
 
+
+
 h2.about {
   position: fixed;
   z-index: 3;
-  right: 3vw;
-
-  top: 15px;
+  right: 5vw;
+  top: calc(25px + 2vh); /* Scale with h1 header. */
   margin: 0px;
 }
 
+
+h2.about {
+  position: static;
+  /*font-size: 3em;*/
+  /*margin-top: 25px;*/
+}
+
+
 h2.about a {
-  font-family: 'Open Sans';
-  color: gray;
+  color: black;
   text-decoration: none;
 }
 
 h2.about a:hover {
- text-decoration: underline;
+  border-bottom: 1px solid black;
 }
 /*
 HEADER
@@ -116,10 +137,6 @@ HEADER
   width: auto;
 }​
 
-p, a {
-  font-family: 'Open Sans';
-}
-
 .model_container {
   width: 500px;
   height: 800px;
@@ -129,29 +146,21 @@ p, a {
 }
 
 .lamp {
-  padding-right: 2px;
-  max-height: 70vh;
+  padding-right: 10px;
+  max-height: 50vh;
   vertical-align: middle;
 
 }
 .lamp.lead {
   padding-left: 130px;
   padding-right: 40px;
-  max-width: 40vw;
-  max-height: 65vh;
+  max-width: 50vw;
+  max-height: 40vh;
 }
 
-img.lamp:not(.lead) {
+img.lamp {
   /*zoom: 2;*/
   cursor: pointer;
-}
-
-#footer {
-  width: 100%;
-  position: absolute;
-  bottom: 3px;
-  left: 0px;
-  /*background-color: green;*/
 }
 
 .nav_container {
@@ -162,12 +171,23 @@ img.lamp:not(.lead) {
 /*
   Footer.
 */
+
+
+#footer {
+  width: 100%;
+  position: absolute;
+  bottom: 8vh;
+  left: 0px;
+  /*background-color: green;*/
+}
+
+
 table.nav_menu {
   margin: auto;
 }
 
 td {
-  padding-right: 3vw;
+  padding-right: 50px;
 }
 td:last-of-type {
   padding-right: 0vw;
@@ -176,33 +196,22 @@ td:last-of-type {
 td img {
   cursor: pointer;
   padding: 0px;
-  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
+td img:hover {
+  border-bottom: 2px solid gray;
 }
 
 td.active img {
-  border-top: 2px solid gray;
-  /*border-left: 1px solid gray;*/
-  /*border-right: 1px solid gray;*/
+  border-bottom: 2px solid black;
 }
 
 .nav_ui {
-  width: 8vh;
-  height: 8vh;
+  max-width: 4vw;
+  max-height: 4vw;
 }
 
-#footer a {
-  position: absolute;
-  right: 8px;
-  color: gray;
-  font-size: 20px;
-  text-decoration: none;
-}
-#footer a.joel_link {
-  bottom: 30px;
-}
-#footer a.contact {
-  bottom: 5px;
-}
 
 .vertical-text {
   transform:  rotate(-90deg) translateX(-100%);
@@ -213,12 +222,20 @@ td.active img {
   position: absolute;
 }
 
-h1:hover {
-  /*text-decoration: none;*/
-  text-decoration: underline;
+.hover_underline {
+  border-bottom: 1px solid transparent;
 }
+
+.hover_underline:hover {
+  border-bottom: 1px solid black;
+}
+
+/*h1:hover {
+  text-decoration: none;
+  border-bottom: 1px solid black;
+}*/
 a:hover, #footer a:hover {
-  text-decoration: underline;
+  border-bottom: 1px solid black;
 }
 
 canvas {
@@ -282,7 +299,11 @@ canvas {
       bottom: 60px
     }
     a.lamp_name {
-      font-size: 72px;
+      font-size: 48px;
+    }
+    .nav_ui {
+      max-width: 4vh;
+      max-height: 4vh;
     }
 }
 
@@ -299,9 +320,6 @@ canvas {
     /*padding-left: 30px;*/
     width: 10vh;
     height: 10vh;
-  }
-  td {
-    padding-right: 20px;
   }
 
 }

@@ -1,0 +1,118 @@
+html {
+  width: 100%;
+  overflow: visible;
+}
+
+
+body {
+  width: 100%;
+  overflow: visible;
+}
+
+.column_container2 {
+  display: inline-block;
+}
+.column2 {
+  max-width: 25%;
+  max-height: 25%;
+  float: left;
+    /*height: 500px;*/
+}
+.column-left{ float: left; width: 33%; }
+.column-right{ float: right; width: 33%; }
+.column-center{ display: inline-block; width: 33%; }
+
+.column_container {
+    /*height: 700px*/;
+
+    position: relative;
+    /*background-color: green;*/
+}
+
+.section {
+  padding-bottom: 40px;
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+.section.materials .column {
+  position: relative;
+}
+
+.section.materials img {
+  height: 100%;
+}
+
+.section.materials img {
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+p {
+  /*padding-left: 10%;
+  /*padding-right: 10%;*/
+  margin: 10px;
+}
+
+.links a {
+  padding-bottom: 20px;
+}
+
+p {
+  text-align: justify;
+  font-size: 18px;
+}
+
+
+/*#header {
+    position: relative;
+}*/
+
+h1,  h2,  h3,  h4, .column > p {
+  text-align: center;
+}
+
+.section.models {
+  height: 700px;
+}
+
+#model_scroll_container {
+  position: absolute;
+  height: 700px;
+  width: 80vw;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  z-index: 2;
+  /*position: absolute;*/
+}
+
+#scroll {
+  width: 2000px;
+  height: 100%;
+}
+
+#canvas_container {
+  position: absolute;
+  height: 700px;
+  width: 100vw;
+  left: 0px;
+
+  /*padding-bottom: 40px;*/
+}
+
+canvas {
+  position: inherit;
+}
+
+#model_scroll_container::-webkit-scrollbar {
+    -webkit-appearance: none;
+    height: 6px;
+}
+
+
+#model_scroll_container::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
