@@ -1,6 +1,17 @@
 [
     {
-        "name": "Okawara Desk #1",
+        "name": "Okawara Wall - 1",
+        "icon": "wall-1/icon2.png",
+        "lead": "wall-1/screenshot.png",
+        "model": "3d/wall0.obj",
+        "images": [
+            "wall-1/DSC03253.jpg",
+            "wall-1/DSC03361.jpg",
+            "wall-1/DSC03318.jpg",
+            "wall-1/DSC03276.jpg"
+        ]
+    }, {
+        "name": "Okawara Desk - 1",
         "icon": "desk-1/icon.png",
         "lead": "desk-1/screenshot.png",
         "model": "3d/desk0.obj",
@@ -8,35 +19,21 @@
             "desk-1/IMG_4911.jpg",
             "desk-1/IMG_4913.jpg",
             "desk-1/IMG_4917.jpg",
-            "desk-1/IMG_4918.jpg",
             "desk-1/IMG_4921.jpg",
             "desk-1/IMG_4923.jpg"
         ]
     }, {
-        "name": "Okawara Wall #1",
-        "icon": "wall-1/icon.png",
-        "lead": "wall-1/screenshot.png",
-        "model": "3d/wall0.obj",
-        "images": [
-            "wall-1/DSC03253.jpg",
-            "wall-1/DSC03361.jpg",
-            "wall-1/DSC03318.jpg",
-            "wall-1/DSC03277.jpg",
-            "wall-1/DSC03276.jpg"
-        ]
-    }, {
-        "name": "Okawara Table #3",
+        "name": "Okawara Table - 3",
         "icon": "table-3/icon.png",
         "lead": "table-3/lead.png",
         "model": "3d/table0.obj",
         "images": [
             "table-3/IMG_2850.jpg",
-            "table-3/IMG_2853.jpg",
-            "table-3/IMG_2863.jpg"
+            "table-3/IMG_2853.jpg"
         ]
     }, {
-        "name": "Okawara Table #2",
-        "icon": "table-2/icon.png",
+        "name": "Okawara Table - 2",
+        "icon": "table-2/icon2.png",
         "lead": "table-2/lead.png",
         "model": "3d/table1.obj",
         "images": [

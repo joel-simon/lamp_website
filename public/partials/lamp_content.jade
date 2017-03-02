@@ -1,8 +1,15 @@
 mixin lamp_content(lamp)
     .lamp_container(data-name="#{lamp.name}")
+
         a.lamp_name.vertical-text() #{lamp.name}
-        .lamp_images
-            img.lamp.lead(src='/imgs/lamps/'+lamp.lead)
+
+        .lamp_content
+            //- .model_container.lamp(data-path="#{lamp.model}")
+                //- .scene
+
+            //- img.lamp.lead()
+            //- (src='/imgs/lamps/'+lamp.lead)
+
             - for (var i = 0; i < lamp.images.length; ++i) {
                 img.lamp(src='/imgs/lamps/'+lamp.images[i])
             - }

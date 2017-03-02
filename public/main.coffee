@@ -86,8 +86,9 @@ $ ->
             throw 'Invalid lamp query' + results
 
     $('img.lamp').not('.lead').click () ->
-        $('#image_wrapper').show()
         $('#image_wrapper img').attr 'src', $(@).attr('src')
+        $('#image_wrapper img').load () ->
+            $('#image_wrapper').show()
         if $(@).width() > $(@).height()
             $('#image_wrapper img').removeClass('tall').addClass('wide')
         else
@@ -97,8 +98,6 @@ $ ->
         $(@).hide()
 
 open_lamp_container = (i) ->
-    # console.log 'open', i
-
     $lamp_container = $('.lamp_container').eq(i)
     name = $lamp_container.data('name')
 
@@ -147,12 +146,20 @@ move_scroll_to = (i) ->
     console.log 'move_scroll_to', i
     $lamp_container = $('.lamp_container').eq(i)
     scroll_amount = $('#scroll_container').scrollLeft()
-    $('#scroll_container').scrollLeft(scroll_amount + $lamp_container.offset().left)
+
+    x = $lamp_container.offset().left - parseInt($lamp_container.css('margin-left'))
+    $('#scroll_container').scrollLeft(scroll_amount + x)
 
 on_resize = () ->
+    # return
+    # console.log $('.lamp_container').position()
+
     $('.lamp_container').each (i) ->
         height = $(@).height()
-        margin_top = ($(window).height() - height) / 2
+
+        margin_top = ((window.innerHeight - height) / 2) - $('#scroll_container').position().top
+        #- $('#header').height()
+
         $(@).css 'margin-top', margin_top
 
         name = $(@).find('a.lamp_name.vertical-text')
