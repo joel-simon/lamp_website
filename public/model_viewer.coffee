@@ -54,6 +54,8 @@ $ ->
   init($container)
 
 
+  $container.css 'top', $('.section').first().position().top + $('.section').height() + 20
+
   # DESK LAMPS
   desk_rotation = V(0, -Math.PI/2,0)#V(0, 4*Math.PI/16, 0)
   desk_offset = V(0, 25,0) #V(0, -16, -$(window).width() / (2*20))
@@ -67,16 +69,52 @@ $ ->
   # add_box('3d/box_table.obj', table_offset, table_rotation)
   add_lamps(table_lamps, 1, table_offset, table_rotation)
 
-
-
   # WALL LAMPS
   wall_rotation = V(0,0,0)#V(0, 4*Math.PI/16, 0)
   add_lamps(wall_lamps, 1, V(0,-30,0), wall_rotation)
   # add_box('3d/box_wall.obj', V(0,0,0), wall_rotation)
 
 
-
+  $(document).scroll on_scroll
+  on_scroll()
   animate()
+
+
+
+on_scroll = () ->
+  hh = $('.section').first().position().top + $('.section').height() + 20
+  scroll = $(document).scrollTop()
+  action_start = hh
+  action_end = hh + $('.section.models').height() - $('#canvas_container').height()
+  scroll_percent = 0
+
+
+  if scroll < action_start
+    top = hh - scroll
+  else if scroll > action_end
+    top = action_end - scroll
+    scroll_percent = 1
+  else # IN BETWEEN - DO ACTION.
+    top = 0
+    scroll_percent = (scroll - action_start) / (action_end - action_start)
+  # top_position = switch scroll
+  #   when value
+  #     # ...
+
+
+  $('#canvas_container').css 'top', top
+  # scroll_threshold = $('.section.models').height() - $('#canvas_container').height()
+  # scrollPercent = Math.min($(@).scrollTop() / scroll_threshold, 1)
+  # console.log scrollPercent
+
+  # if scrollPercent > 1
+  #   dy = $(document).scrollTop() - scroll_threshold
+  #   $('#canvas_container').css 'top', 200 - dy
+
+  for group in lamp_groups
+    y = group.userData.ry + 3*Math.PI/2 + (Math.PI) * (1-scroll_percent)
+    group.rotation.y = y
+
 
 
 # start = Date.time()
@@ -210,6 +248,7 @@ addLamp = (scene, lamp, callback) ->
 
 
 update = () -> # do nothing
+  return
   scrollPercent = $('#model_scroll_container').scrollLeft() /  ($('#scroll').width() - $('#model_scroll_container').width())
   for group in lamp_groups
     # console.log group.userData.ry

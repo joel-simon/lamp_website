@@ -74,30 +74,30 @@ h1,  h2,  h3,  h4, .column > p {
 }
 
 .section.models {
-  height: 700px;
+  height: 1400px;
+  padding-bottom: 0px;
 }
 
-#model_scroll_container {
+/*#model_scroll_container {
   position: absolute;
   height: 700px;
   width: 80vw;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   z-index: 2;
-  /*position: absolute;*/
 }
 
 #scroll {
   width: 2000px;
   height: 100%;
 }
-
+*/
 #canvas_container {
-  position: absolute;
+  position: fixed;
   height: 700px;
   width: 100vw;
   left: 0px;
-
+  top: 200px;
   /*padding-bottom: 40px;*/
 }
 
