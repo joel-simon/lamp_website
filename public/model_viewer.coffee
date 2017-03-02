@@ -3,7 +3,6 @@ objLoader = new THREE.OBJLoader()
 scene = null
 camera = null
 renderer = null
-scale = 1
 objects = []
 
 class Lamp
@@ -12,32 +11,30 @@ class Lamp
 V = (a, b, c) ->
   new THREE.Vector3(a, b, c)
 
-
-wall_lamps = [
-  new Lamp('3d/wall0.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/wall1.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/wall3.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/wall4.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/wall5.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0))
-]
-
-table_lamps = [
-  new Lamp('3d/table0.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/table1.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
-  # new Lamp('3d/table2.obj', 'table', V( 0, 8, 0 ), V(0, 0, 0)),
-  # new Lamp('3d/table3.obj', 'table', V( 0, 8, 0 ), V(0, 0, 0)),
-  new Lamp('3d/table4.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/table5.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
-  new Lamp('3d/table6.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
-]
-
 desk_lamps = [
-  new Lamp('3d/desk0.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
   new Lamp('3d/desk1.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
+  new Lamp('3d/desk0.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
   new Lamp('3d/desk2.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
   new Lamp('3d/desk3.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
   new Lamp('3d/desk4.obj', 'desk', V( 0, 0, 0 ), V(0, 0,0)),
 ]
+table_lamps = [
+  new Lamp('3d/table1.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/table6.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/table0.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/table5.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/table4.obj', 'table', V( 0, 0, 0 ), V(0, 0, 0)),
+]
+wall_lamps = [
+  new Lamp('3d/wall1.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/wall3.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/wall0.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/wall4.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0)),
+  new Lamp('3d/wall5.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0))
+]
+
+
+
 
 add_box = (path, offset, rotation, scale = 1) ->
   return
@@ -48,10 +45,19 @@ add_box = (path, offset, rotation, scale = 1) ->
     group.rotation.y = rotation.y
     group.scale.setScalar scale
 
-$ ->
-  scale = 6
+get_scale = () ->
   $container = $('#canvas_container')
-  init($container)
+  # If in portrait mode, only shoe 3x3 lamps
+  if $container.width() < 500
+    scale = 12 * ($container.height())/700
+  else
+    scale = 6 * ($container.height())/700
+  scale
+$ ->
+  $container = $('#canvas_container')
+
+  console.log $container, $container.height(), get_scale($container)
+  init($container, get_scale())
 
 
   $container.css 'top', $('.section').first().position().top + $('.section').height() + 20
@@ -59,24 +65,20 @@ $ ->
   # DESK LAMPS
   desk_rotation = V(0, -Math.PI/2,0)#V(0, 4*Math.PI/16, 0)
   desk_offset = V(0, 25,0) #V(0, -16, -$(window).width() / (2*20))
-  # add_box('3d/box_desk.obj', desk_offset, desk_rotation, 2)
   add_lamps(desk_lamps, 2, desk_offset, desk_rotation)
 
 
   # TABLE LAMPS
   table_rotation = V(0,0,0)#V(0, -4*Math.PI/16, 0)
   table_offset = V(0,0,0)#V(0, -16, $(window).width() / (2*20))
-  # add_box('3d/box_table.obj', table_offset, table_rotation)
   add_lamps(table_lamps, 1, table_offset, table_rotation)
 
   # WALL LAMPS
   wall_rotation = V(0,0,0)#V(0, 4*Math.PI/16, 0)
   add_lamps(wall_lamps, 1, V(0,-30,0), wall_rotation)
-  # add_box('3d/box_wall.obj', V(0,0,0), wall_rotation)
-
 
   $(document).scroll on_scroll
-  on_scroll()
+  setTimeout on_scroll, 100
   animate()
 
 
@@ -87,7 +89,6 @@ on_scroll = () ->
   action_start = hh
   action_end = hh + $('.section.models').height() - $('#canvas_container').height()
   scroll_percent = 0
-
 
   if scroll < action_start
     top = hh - scroll
@@ -118,7 +119,7 @@ on_scroll = () ->
 
 
 # start = Date.time()
-init = ($container) ->
+init = ($container, scale) ->
   # SCENE
   scene = new THREE.Scene()
 
@@ -132,6 +133,8 @@ init = ($container) ->
   # CAMERA
   width = $container.width()
   height = $container.height()
+
+  console.log 'width=', width, 'height=', height
 
   aspect = width / height
   camera = new THREE.OrthographicCamera(width / - 2, width / 2, height / 2, height / - 2, -1000, 1000)
@@ -166,6 +169,9 @@ init = ($container) ->
     camera.right = width / 2
     camera.top = height / 2
     camera.bottom = height / - 2
+
+    camera.zoom = get_scale()
+    on_scroll()
     # camera.updateProjectionMatrix()
     renderer.setSize width, height
     camera.aspect = width / height

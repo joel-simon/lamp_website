@@ -73,23 +73,10 @@ HEADER
   margin: 0px;
 }
 
-
-
 h2.about {
-  position: fixed;
   z-index: 3;
   right: 5vw;
-  top: calc(25px + 2vh); /* Scale with h1 header. */
-  margin: 0px;
 }
-
-
-h2.about {
-  position: static;
-  /*font-size: 3em;*/
-  /*margin-top: 25px;*/
-}
-
 
 h2.about a {
   color: black;
