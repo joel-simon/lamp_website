@@ -33,9 +33,6 @@ wall_lamps = [
   new Lamp('3d/wall5.obj', 'wall', V( 0, 0, 0 ), V(0, 0, 0))
 ]
 
-
-
-
 add_box = (path, offset, rotation, scale = 1) ->
   return
   objLoader.load path, (group) ->
@@ -53,6 +50,7 @@ get_scale = () ->
   else
     scale = 6 * ($container.height())/700
   scale
+
 $ ->
   $container = $('#canvas_container')
 
@@ -83,7 +81,7 @@ $ ->
 
 
 
-on_scroll = () ->
+on_scroll = (event) ->
   hh = $('.section').first().position().top + $('.section').height() + 20
   scroll = $(document).scrollTop()
   action_start = hh

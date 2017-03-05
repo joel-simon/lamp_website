@@ -1,6 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:100, 300, 400');
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
+/*@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:100, 300, 400');*/
 /*@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');*/
+
+@font-face {
+  font-family: Avenir;
+  font-weight: lighter;
+  src: url("fonts/avenirnext-ultralight.ttf") format("truetype");
+}
+
+/*@font-face {
+  font-family: Foo;
+  font-weight: normal;
+  src: url("fonts/AvenirLTStd-Light.otf") format("opentype");
+}
+*/
 html {
   height: 100%;
   overflow: hidden;
@@ -12,9 +25,30 @@ body {
   margin: 0;
 }
 
-h2 {
+/*h2 {
   font-size: 24px;
+}*/
+
+
+/*
+* {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: lighter;
 }
+*/
+
+* {
+  font-family: 'Avenir', sans-serif;
+  font-weight: lighter;
+}
+
+#header h1 {
+  font-size: 36px;
+}
+/*p {
+  font-family: 'Foo', sans-serif;
+  font-weight: normal;
+}*/
 
 #scroll_container {
   position: absolute;
@@ -37,15 +71,6 @@ h2 {
   display: inline-block; /*For scrolling.*/
 }
 
-* {
-  font-family: 'Alegreya Sans', sans-serif;
-  font-weight: lighter;
-}
-
-p {
-  font-weight: normal;
-}
-
 a.lamp_name {
   font-size: 36px;
   left: calc(-100px + 0px);
@@ -59,31 +84,29 @@ HEADER
 #header {
   position: relative; /* this is only to make z-index work with scroll container */
   width: 100%;
-  /*top: 0px;*/
   left: 0px;
   z-index: 2;
   margin-top: 2vh;
 }
 
 #header h1 {
-  display:block;
+  display: block;
   text-align: center;
-  font-size: 48px;
   cursor: pointer;
   margin: 0px;
 }
 
-h2.about {
+h2 {
   z-index: 3;
   right: 5vw;
 }
 
-h2.about a {
+h2 a {
   color: black;
   text-decoration: none;
 }
 
-h2.about a:hover {
+h2 a:hover {
   border-bottom: 1px solid black;
 }
 /*
@@ -292,6 +315,9 @@ a:hover, #footer a:hover {
       max-width: 4vh;
       max-height: 4vh;
     }
+/*    p {
+      font-size: 32px;
+    }*/
 }
 
 /* Landscape */
@@ -308,6 +334,9 @@ a:hover, #footer a:hover {
     width: 10vh;
     height: 10vh;
   }
+/*  p {
+    font-size: 32px;
+  }*/
 
 }
 

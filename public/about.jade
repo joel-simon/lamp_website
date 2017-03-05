@@ -3,6 +3,7 @@ doctype html
 html
     head
         script(src='/libs/jquery.js')
+        script(src='/libs/jquery-mousewheel.min.js')
 
         script(src='/libs/three.min.js')
         script(src='/libs/OBJLoader.js')
@@ -49,11 +50,6 @@ html
         //- .section(style="padding-bottom:0px;")
         //-     h2 Foo
         //-     p.
-        //-         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
-        //-     p.
-        //-         A lineage of lamps that each consist of a box with a curve. The box is the mass while the supporting curve provides the movement and energy. material of the box is is light and airy (Kozo paper) while the curve is solid (cherry wood). The box is static while the curve is dynamic. The form is abstract while the materials are natural. The balance of these contrasts is what I strive for in each design and what I believe gives them sculptural integrity.
-        //-         I see these lamps as a synthesis of the simplicity and energy of mid century modern furniture with the elegance and naturalistic character of traditional Japanese architecture and materials. Several subclasses of lamps are formed by rotating the box 90 degrees along any axis.
 
         //-     .column_container
         //-         .column.column-left
@@ -65,51 +61,50 @@ html
 
         .section.materials
             h2 Materials
+            .column_container2.materials
+                .top
+                    .column2.left
+                        h4 Cherry Wood
+                        img(src='/imgs/CherryLight.jpg')
+                        p Cherry is used on all lamps for its rich pink to mild-red colors that pairs with warm colored papers. Desk lamps use riftsawn cherry veneer. Wall and table lamps use an advanced method of 'Extreme Wood Bending' for directly bending specially treated pieces of solid hardwood.
 
-            //- .foo(style='height:150px;')
-            //-     //- .left(style='float:left;height:150px;')
-            //-     img(src='/imgs/CherryLight.jpg')
-            //-     h4 Cherry Wood
-            //-     p The Desk lamps use laminated Cherry wood veneer.
-            //- .foo(style='height:150px;')
-            //-     .left(style='float:left;height:150px;')
-            //-         img(src='/imgs/CherryLight.jpg')
-            //-         h4 Cherry Wood
-            //-     p The Desk lamps use laminated Cherry wood veneer.
+                    .column2.right
+                        //- img(src='/imgs/paper.jpg')
+                        h4 Washi Paper
+                        img(src='/imgs/202L.jpg')
+                        p A type of Washi paper called Okawara was selected for its subtle and warm natural colors as well as balance with cherry wood and white walls. Both handmade and machine made Okawara papers are used. Okawara Paper is handmade of kozo fibers and sulphite.
 
-            .column_container2
-                .column2
-                    img(src='/imgs/CherryLight.jpg')
-                    h4 Cherry Wood
-                    p The Desk lamps use laminated Cherry wood veneer.
-
-                .column2
-                    img(src='/imgs/leds.jpg')
+                .column2.left
                     h4 LED's
-                    p A segment of 12V LED's are used in every lamp.
+                    img(src='/imgs/leds.jpg')
+                    p Strips of white 12V LED's are used in every lamp. LED's are the longest-lasting, most energy-efficient lighting method. Additionally, they can last up to 50,000 hours — 42 times longer than incandescent bulbs and 13 times longer than halogen bulbs.
 
-                //- .column_container2
 
-                .column2
-                    img(src='/imgs/acrylic.jpg')
+                .column2.right
                     h4 Acrylic
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    img(src='/imgs/acrylic.jpg')
+                    p Polished acrylic boxes, often used in museum display cases, provide the structure and shape of the box. Paper is attached directly to the outside. Polished edges ensure even transparency throughout.
 
-                .column2
-                    img(src='/imgs/paper.jpg')
-                    h4 Paper
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        .section.About
+            h2 About
 
-
-
+            p.
+                This collection began as an exercise in restriction. How many lamps can be formed out of a curve and a box? This has proved to be an endlessly engaging design challenge. Any success of the lamps comes from the balance of many opposites. The box is the mass while the supporting curve provides the movement and energy. The material of the box is is light and airy while the curve is solid. The box is static while the curve is dynamic. The form is abstract while the materials are natural. The simplicity and energy of mid century modern  with the elegance and naturalistic character of traditional.
             //- p.
-            //-     The form of the light is a critical issue. Many existing box or rice paper lamps contain one or more halogen bulbs inside. Once on, these visually disrupt the forms and decouple them from the function of the light. The boxes become a cage that entomb a light point creating a nested hierarchy of forms. You cannot look at or appreciate the form without your eye being drawn to the bulb within. LED strips are both more environmentally friendly and break the restriction of circular enclosures for homogeneous light. The result is no longer a paper cage for a light, like a firefly in a jar, but a box whose essence is bright.
-        .section
+                The form of the light is a critical issue. Many existing box or rice paper lamps contain one or more halogen bulbs inside. Once on, these visually disrupt the forms and decouple them from the function of the light. The boxes become a cage that entomb a light point creating a nested hierarchy of forms. You cannot look at or appreciate the form without your eye being drawn to the bulb within. LED strips break the restriction of circular enclosures for homogeneous light. The result is no longer a paper cage for a light, like a firefly in a jar, but a box whose essence is bright.
+
+        .section.who
             h2 Joel
-            p Joel lives in New York City. He has been thinking about lamps since high-school. He currently works at Rockefeller University. His other interests include figure sculpture, computational design and other miscellaneous projects.
-            .links(style="text-align: center;")
-                a(href="http://joelsimon.net", target="_blank") Other Work By Joel
-                br
-                a(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
+            .column_container.joel_describe
+                .left_column
+                    p.
+                        Joel lives in New York City. He has been working on lamps and sculpture since high-school. He currently works at Rockefeller University. His other interests include figure sculpture, computational and evolutionary design and other miscellaneous projects.
+                .right_column
+                    img.right_column(src='imgs/lamp_me.jpg')
 
         #about_footer(style="padding-bottom:50px")
+            .links(style="text-align: center;")
+                h2: a(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
+                h2: a(href="http://joelsimon.net", target="_blank") Other Work By Joel
+                //- br
+
