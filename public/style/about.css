@@ -15,6 +15,9 @@ body {
   /*display: flex;*/
 }
 .column2 {
+  box-sizing: border-box;
+  padding-left: 5%;
+  padding-right: 5%;
   width: 50%;
   height: 50%;
 }
@@ -59,7 +62,7 @@ body {
 }
 */
 p {
-  margin: 20px;
+  margin: 0px;
   text-align: justify;
   /*font-size: 20px;*/
 }

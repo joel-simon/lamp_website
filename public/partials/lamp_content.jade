@@ -4,12 +4,6 @@ mixin lamp_content(lamp)
         a.lamp_name.vertical-text() #{lamp.name}
 
         .lamp_content
-            //- .model_container.lamp(data-path="#{lamp.model}")
-                //- .scene
-
-            //- img.lamp.lead()
-            //- (src='/imgs/lamps/'+lamp.lead)
-
             - for (var i = 0; i < lamp.images.length; ++i) {
                 img.lamp(src='/imgs/lamps/'+lamp.images[i])
             - }

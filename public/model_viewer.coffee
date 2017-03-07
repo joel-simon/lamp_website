@@ -79,8 +79,6 @@ $ ->
   setTimeout on_scroll, 100
   animate()
 
-
-
 on_scroll = (event) ->
   hh = $('.section').first().position().top + $('.section').height() + 20
   scroll = $(document).scrollTop()
@@ -96,25 +94,28 @@ on_scroll = (event) ->
   else # IN BETWEEN - DO ACTION.
     top = 0
     scroll_percent = (scroll - action_start) / (action_end - action_start)
-  # top_position = switch scroll
-  #   when value
-  #     # ...
-
 
   $('#canvas_container').css 'top', top
-  # scroll_threshold = $('.section.models').height() - $('#canvas_container').height()
-  # scrollPercent = Math.min($(@).scrollTop() / scroll_threshold, 1)
-  # console.log scrollPercent
-
-  # if scrollPercent > 1
-  #   dy = $(document).scrollTop() - scroll_threshold
-  #   $('#canvas_container').css 'top', 200 - dy
 
   for group in lamp_groups
     y = group.userData.ry + 3*Math.PI/2 + (Math.PI) * (1-scroll_percent)
     group.rotation.y = y
 
+on_resize = () ->
+  $container = $('#canvas_container')
+  width = $container.width()
+  height = $container.height()
+  camera.left = width / - 2
+  camera.right = width / 2
+  camera.top = height / 2
+  camera.bottom = height / - 2
 
+  camera.zoom = get_scale()
+  on_scroll()
+  # camera.updateProjectionMatrix()
+  renderer.setSize width, height
+  camera.aspect = width / height
+  camera.updateProjectionMatrix()
 
 # start = Date.time()
 init = ($container, scale) ->
@@ -160,20 +161,7 @@ init = ($container, scale) ->
   # Attach renderer to the container div.
   $container.append $(renderer.domElement)
 
-  $(window).on 'resize', () ->
-    width = $container.width()
-    height = $container.height()
-    camera.left = width / - 2
-    camera.right = width / 2
-    camera.top = height / 2
-    camera.bottom = height / - 2
-
-    camera.zoom = get_scale()
-    on_scroll()
-    # camera.updateProjectionMatrix()
-    renderer.setSize width, height
-    camera.aspect = width / height
-    camera.updateProjectionMatrix()
+  $(window).on 'resize', on_resize
 
 
 
@@ -188,6 +176,8 @@ add_lamps = (lamps, scale, position, rotation) ->
     addLamp scene, lamp, (object) ->
       object.scale.setScalar scale
       objects.push(object)
+      on_scroll()
+      on_resize()
 
   ii = 0
   derp = () ->
