@@ -2,13 +2,6 @@ window.hash_to_index = {}
 window.index_to_hash = {}
 window.images_loaded = false
 
-class Lamp
-  constructor: (@path, @type, @rx=0, @ry = 0, @rz = 0) ->
-    # if @type == 'wall'
-    #   @width = 300
-    # else
-    #   @width = 400
-
 $ ->
     is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
     query = window.location.search
@@ -151,18 +144,15 @@ move_scroll_to = (i) ->
     $('#scroll_container').scrollLeft(scroll_amount + x)
 
 on_resize = () ->
-    # return
-    # console.log $('.lamp_container').position()
-
     $('.lamp_container').each (i) ->
         height = $(@).height()
 
         margin_top = ((window.innerHeight - height) / 2) - $('#scroll_container').position().top
-        #- $('#header').height()
 
         $(@).css 'margin-top', margin_top
 
         name = $(@).find('a.lamp_name.vertical-text')
+
         # The element is transalted by 0 degrees - so .width() is screen height.
         name.css 'margin-top', (height - name.width()) / 2
 
