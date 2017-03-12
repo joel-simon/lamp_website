@@ -120,9 +120,22 @@ on_scroll = () ->
         $('.active').removeClass 'active'
         $td.addClass('active')
 
+    make_active(most_visible_container())
+
+most_visible_container = ( ) ->
+    largest_percent = 0
+    largest_container = null
+
     $('.lamp_container').each (i) ->
-        if percent_of_screen($(@)) >= .5
-            make_active(i)
+        pos = percent_of_screen($(@))
+        if pos >= largest_percent or largest_container == null
+            largest_container = i
+            largest_percent = pos
+
+    console.log largest_container
+    largest_container
+
+
 
 percent_of_screen = ($lamp_container) ->
     scroll = $('#scroll_container').scrollLeft()
