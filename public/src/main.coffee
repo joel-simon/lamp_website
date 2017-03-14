@@ -132,10 +132,7 @@ most_visible_container = ( ) ->
             largest_container = i
             largest_percent = pos
 
-    console.log largest_container
     largest_container
-
-
 
 percent_of_screen = ($lamp_container) ->
     scroll = $('#scroll_container').scrollLeft()

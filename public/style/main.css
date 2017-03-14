@@ -10,7 +10,6 @@
   src: url("fonts/AvenirLTStd-Light.otf") format("opentype");
 }
 */
-
 html {
   height: 100%;
   overflow: hidden;
@@ -24,8 +23,12 @@ body {
 
 * {
   font-family: 'Avenir', sans-serif;
+}
+
+h1, h2, h3, h4, a {
   font-weight: lighter;
 }
+
 
 #header h1 {
   font-size: 36px;
@@ -222,6 +225,13 @@ a:hover, #footer a:hover {
   and (min-device-width: 320px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
+    td img:hover {
+      border-bottom: 2px solid transparent;
+    }
+
+    td.active img {
+      border-bottom: 2px solid black;
+    }
 
 }
 

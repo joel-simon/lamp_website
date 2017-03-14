@@ -5,31 +5,69 @@ camera = null
 renderer = null
 lamp_groups = []
 
+# 5 columns and 3 rows.
+lamp_grid = (null for i in [0...5] for j in [0...3])
+
 desk_lamps = ['3d/desk1.obj', '3d/desk0.obj', '3d/desk2.obj','3d/desk3.obj', '3d/desk4.obj' ]
 table_lamps = ['3d/table1.obj','3d/table6.obj','3d/table0.obj', '3d/table5.obj', '3d/table4.obj']
-wall_lamps = ['3d/wall1.obj','3d/wall3.obj','3d/wall0.obj', '3d/wall4.obj', '3d/wall5.obj']
+wall_lamps = ['3d/wall2.obj', '3d/wall6.obj','3d/wall-1.obj', '3d/wall1.obj','3d/wall5.obj']
 
 $ ->
     $container = $('#canvas_container')
     init($container, get_scale())
     $container.css 'top', $('.section').first().position().top + $('.section').height() + 20
 
-    for path, i in desk_lamps
-        z = (i * 40) - 80
-        add_lamp(path, 'desk', {z: z, y: 25, ry: -Math.PI/2, scale:2})
+    padd = if $container.width() < $container.height() then 25 else 40
 
-    for path, i in table_lamps
-        z = (i * 40) - 80
-        add_lamp(path, 'table', {z: z})
+    desk_lamps.forEach (path, i) ->
+        z = (i * padd) - 2*padd
+        options = {z, y: 25, ry: -Math.PI/2, scale:2}
+        add_lamp path, 'desk', options, (lamp) ->
+            lamp_grid[0][i] = lamp
 
-    for path, i in wall_lamps
-        z = (i * 40) - 80
-        add_lamp(path, 'wall', {z: z, y:-30})
 
-    $(document).scroll on_scroll
+    table_lamps.forEach (path, i) ->
+        z = (i * padd) - 2*padd
+        add_lamp path, 'table', {z}, (lamp) ->
+            lamp_grid[1][i] = lamp
+
+    wall_lamps.forEach (path, i) ->
+        z = (i * padd) - 2*padd
+        add_lamp path, 'wall', {z: z, y:-30}, (lamp) ->
+            lamp_grid[2][i] = lamp
+
+    # $(document).scroll on_scroll
     $(window).on 'resize', on_resize
     setTimeout on_scroll, 100
+    setInterval on_resize, 100
     animate()
+
+update_positions = () ->
+    $container = $('#canvas_container')
+    width = $container.width()
+    height = $container.height()
+
+    vertical = $container.width() < $container.height()
+
+    step = if vertical then 30 else 40#(width/35)
+    offset = if vertical then step/2 else 0
+
+    console.log width, step
+
+    for row, r in lamp_grid
+        for lamp, c in row
+            continue unless lamp
+            console.log lamp.edges
+            lamp.position.z = (c*step) - 2 * step - offset
+            if vertical and (c != 2) and (c !=3)
+                lamp.traverse( ( object ) -> object.visible = false )
+                for e in lamp.edges
+                    e.visible = false
+            else
+                lamp.traverse( ( object ) -> object.visible = true )
+                for e in lamp.edges
+                    e.visible = true
+
 
 
 get_scale = () ->
@@ -37,14 +75,15 @@ get_scale = () ->
             If in portrait mode, only show 3x3 lamps
     """
     $container = $('#canvas_container')
+    # console.log $container.width(), $container.height()
     if $container.width() < 500
-        scale = 12 * ($container.height())/700
+        scale = 6 * ($container.height())/700
     else
         scale = 6 * ($container.height())/700
     scale
 
 
-add_lamp = (path, type, {scale, x, y, z, rx, ry, rz}) ->
+add_lamp = (path, type, {scale, x, y, z, rx, ry, rz}, callback) ->
     box_path = switch type
         when 'wall' then  '3d/box_wall.obj'
         when 'table' then '3d/box_table.obj'
@@ -77,6 +116,7 @@ add_lamp = (path, type, {scale, x, y, z, rx, ry, rz}) ->
 
             on_scroll()
             on_resize()
+            callback(group)
 
 on_scroll = (event) ->
     hh = $('.section').first().position().top + $('.section').height() + 20
@@ -114,17 +154,18 @@ on_resize = () ->
     renderer.setSize width, height
     camera.aspect = width / height
     camera.updateProjectionMatrix()
+    update_positions()
 
 init = ($container, scale) ->
     # SCENE
     scene = new THREE.Scene()
 
     # LIGHTING
-    ambient = new THREE.AmbientLight( 0x444444 )
-    scene.add ambient
-    directionalLight = new THREE.DirectionalLight( 0xffeedd )
-    directionalLight.position.set 0, 200, 200
-    scene.add directionalLight
+    # ambient = new THREE.AmbientLight( 0x444444 )
+    # scene.add ambient
+    # directionalLight = new THREE.DirectionalLight( 0xffeedd )
+    # directionalLight.position.set 0, 200, 200
+    # scene.add directionalLight
 
     # CAMERA
     width = $container.width()
@@ -146,6 +187,7 @@ init = ($container, scale) ->
     $container.append $(renderer.domElement)
 
 update = () -> # do nothing
+    on_scroll()
 
 animate = () ->
     requestAnimationFrame animate
@@ -162,6 +204,7 @@ add_out_line = (group) ->
             mesh.material.polygonOffset = true
             mesh.material.polygonOffsetFactor = 2
             mesh.material.polygonOffsetUnits = 1
+            mesh.material.side = THREE.DoubleSide
 
             edges = new THREE.EdgesHelper(mesh, 0x000000, 80)
             edges.material.linewidth = 1
