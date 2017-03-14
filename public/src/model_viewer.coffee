@@ -39,7 +39,7 @@ $ ->
     # $(document).scroll on_scroll
     $(window).on 'resize', on_resize
     setTimeout on_scroll, 100
-    setInterval on_resize, 100
+    setInterval on_resize, 500
     animate()
 
 update_positions = () ->
@@ -52,12 +52,10 @@ update_positions = () ->
     step = if vertical then 30 else 40#(width/35)
     offset = if vertical then step/2 else 0
 
-    console.log width, step
 
     for row, r in lamp_grid
         for lamp, c in row
             continue unless lamp
-            console.log lamp.edges
             lamp.position.z = (c*step) - 2 * step - offset
             if vertical and (c != 2) and (c !=3)
                 lamp.traverse( ( object ) -> object.visible = false )
@@ -107,6 +105,7 @@ add_lamp = (path, type, {scale, x, y, z, rx, ry, rz}, callback) ->
             group.scale.setScalar(scale) if scale?
 
             group.userData.ry = if ry? then ry else 0
+            group.userData.rx = Math.random() * 2 -1
 
             add_out_line(group)
 
@@ -121,24 +120,32 @@ add_lamp = (path, type, {scale, x, y, z, rx, ry, rz}, callback) ->
 on_scroll = (event) ->
     hh = $('.section').first().position().top + $('.section').height() + 20
     scroll = $(document).scrollTop()
+
     action_start = hh
     action_end = hh + $('.section.models').height() - $('#canvas_container').height()
     scroll_percent = 0
 
     if scroll < action_start
         top = hh - scroll
+
     else if scroll > action_end
         top = action_end - scroll
         scroll_percent = 1
+
     else # IN BETWEEN - DO ACTION.
         top = 0
         scroll_percent = (scroll - action_start) / (action_end - action_start)
 
     $('#canvas_container').css 'top', top
 
+    x = (scroll_percent-.5) * 2
+    x = 1 - Math.abs(x)**2
+    # x = x * (Math.PI/32)
+
     for group in lamp_groups
-        y = group.userData.ry + 3*Math.PI/2 + (Math.PI) * (1-scroll_percent)
+        y = group.userData.ry + 3*Math.PI/2 + Math.PI*(1-scroll_percent)
         group.rotation.y = y
+        group.rotation.x = -x * group.userData.rx*(Math.PI/32)
 
 on_resize = () ->
     $container = $('#canvas_container')
