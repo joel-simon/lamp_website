@@ -3,23 +3,13 @@ doctype html
 
 html
     head
-        //- title Studio Simon Lamps
+        title Simon Lamps
         script(src='/libs/jquery.js')
         script(src='/libs/jquery-mousewheel.min.js')
 
         script(src='/src/main.js')
 
         link(rel='stylesheet', href='/style/main.css')
-
-        //- script(src='/libs/three.min.js')
-        //- script(src='/libs/OrbitControls.js')
-
-        //- script(src='/libs/OBJLoader.js')
-        //- script(src='/multiple_viewer.js')
-
-        //- script(src='/libs/tween.js')
-        //- script(src='/model_viewer.js')
-
     body
         #header(style="text-align: center;")
             .horizontally_centered(style="display: inline-block")
@@ -27,21 +17,15 @@ html
 
             h2.about: a(href="/about.html") more
 
-
-            //- .about(style="display: inline-block;text-align: right;color:gray;")
-            //-     h3 about
-
         #scroll_container
             for lamp in public._data
                 +lamp_content(lamp)
-
 
         #footer
             .nav_container
                 table.nav_menu
                     each lamp, i in public._data
                         - path = '/imgs/lamps/' + lamp.icon
-                        //- - path = '/imgs/box.png'
                         td(class = (i == 0 ? 'active' : undefined))
                             img.nav_ui(src=path, data-i=i)
 

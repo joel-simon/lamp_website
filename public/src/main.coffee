@@ -52,17 +52,18 @@ $ ->
                 $(@).scrollLeft (@scrollLeft - delta)
 
     # When all images have loaded.
-    $(window).on "load", () ->
-        window.images_loaded = true
-        on_resize()
-        hash = document.location.pathname
-        if hash_to_index[hash]?
-            open_lamp_container(hash_to_index[hash])
-            # move_scroll_to(hash_to_index[hash])
-        else
-            console.log 'no hash', document.location.hash
-            document.location.hash = ''
+    # $(window).on "load", () ->
+    #     window.images_loaded = true
+    #     on_resize()
+    #     hash = document.location.pathname
+    #     if hash_to_index[hash]?
+    #         # open_lamp_container(hash_to_index[hash])
+    #         move_scroll_to(hash_to_index[hash])
+    #     else
+    #         console.log 'no hash', document.location.hash
+    #         document.location.hash = ''
 
+    # Click header to go to front.
     $('#header h1').on 'click touch', () ->
         if window.location.pathname == '/'
             $('#scroll_container').scrollLeft(0)
@@ -78,17 +79,51 @@ $ ->
         else
             throw 'Invalid lamp query' + results
 
-    $('img.lamp').not('.lead').click () ->
-        $('#image_wrapper img').attr 'src', $(@).attr('src')
-        $('#image_wrapper img').load () ->
-            $('#image_wrapper').show()
-        if $(@).width() > $(@).height()
-            $('#image_wrapper img').removeClass('tall').addClass('wide')
-        else
-            $('#image_wrapper img').removeClass('wide').addClass('tall')
+    """ Image viewer.
+    """
+    $imgs = $('img.lamp')
 
-    $('#image_wrapper').click () ->
-        $(@).hide()
+    # Click image to make fullscreen.
+    current_open_image = null
+    $('img.lamp').click () ->
+        current_open_image = $imgs.index($(@))
+        open_image($(@))
+
+    # Click again to hide.
+    $('#image_wrapper').click () -> $(@).hide()
+
+    $(document).keyup (e) ->
+
+        # Use escape to quit.
+        $('#image_wrapper').hide() if e.keyCode == 27 # escape
+
+        if $('#image_wrapper').is(":visible")
+
+            # Use arrows to move images.
+
+            if e.keyCode == 37 #Left
+                current_open_image -= 1
+                current_open_image = Math.max(current_open_image, 0)
+
+            else if e.keyCode == 39 #Right
+                current_open_image += 1
+                current_open_image = Math.min(current_open_image, $imgs.length)
+
+            open_image($('img.lamp').eq(current_open_image))
+
+    $(document).keydown (e) ->
+        if $('#image_wrapper').is(":visible")
+            e.preventDefault()
+
+open_image = ($img) ->
+    $('#image_wrapper img').attr 'src', $img.attr('src')
+    $('#image_wrapper img').load () ->
+        $('#image_wrapper').show()
+    if $img.width() > $img.height()
+        $('#image_wrapper img').removeClass('tall').addClass('wide')
+    else
+        $('#image_wrapper img').removeClass('wide').addClass('tall')
+
 
 open_lamp_container = (i) ->
     $lamp_container = $('.lamp_container').eq(i)
@@ -146,7 +181,6 @@ percent_of_screen = ($lamp_container) ->
     return Math.min((right - left) / w_width, 1)
 
 move_scroll_to = (i) ->
-    console.log 'move_scroll_to', i
     $lamp_container = $('.lamp_container').eq(i)
     scroll_amount = $('#scroll_container').scrollLeft()
 
