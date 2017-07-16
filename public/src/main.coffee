@@ -48,6 +48,7 @@ $ ->
 
     # Resize the window as images load.
     $('.lamp').load () ->
+        console.log 'load'
         on_resize()
 
     # Enable vertical mousewheel input on scroll_container
@@ -107,7 +108,6 @@ $ ->
 
             ### Use arrows to move images.
             ###
-
             if e.keyCode == 37 #Left
                 current_open_image -= 1
                 current_open_image = Math.max(current_open_image, 0)
@@ -198,14 +198,12 @@ move_scroll_to = (i) ->
 
 on_resize = () ->
     window_height = window.innerHeight
-    # window_width =
     lamp_container_height_percent = .6
-    # footer_height = '20vh'
+    container_height = window_height * lamp_container_height_percent
 
     $('.lamp_container').each (i) ->
         ### Vertically center each lamp_container element.
         ###
-        container_height = $(@).height()
         scroll_top = $('#scroll_container').position().top
         margin_top = ((window_height - container_height) / 2) - scroll_top
         $(@).css 'margin-top', margin_top
