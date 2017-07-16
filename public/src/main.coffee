@@ -2,14 +2,18 @@ window.hash_to_index = {}
 window.index_to_hash = {}
 window.images_loaded = false
 
-$ ->
-    is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
-    query = window.location.search
-
+bind_navigation = () ->
     # Allow navigation input.
     $('.nav_ui').click () ->
         i = Number($(@).data('i'))
         move_scroll_to(i)
+
+
+$ ->
+    is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+    query = window.location.search
+
+    bind_navigation()
 
     # Bind resize and scroll events.
     on_resize()
@@ -17,43 +21,44 @@ $ ->
     on_scroll()
     $('#scroll_container').scroll(on_scroll)
 
-    history.pushState({'scrollLeft': 0}, "", "/")
+    # history.pushState({'scrollLeft': 0}, "", "/")
 
     # Create hashes from lamp names.
     $('.lamp_container').each (i) ->
-        name = $(@).find('a.lamp_name').text()
-        path = '/'+name_to_path(name)
+        name = $(@).data('name')
+        path = $(@).data('path')
+        # path = '/'     + path
         hash_to_index[path] = i
         index_to_hash[i] = path
 
-    $('.lamp_container').each (i) ->
-        $(@).find('a.lamp_name').on 'click touch', () ->
-            open_lamp_container(i)
+    # $('.lamp_container').each (i) ->
+    #     $(@).find('a.lamp_name').on 'click touch', () ->
+    #         open_lamp_container(i)
 
-    $(window).on 'popstate', (e) ->
-        lamp_idx = e.originalEvent?.state?.lamp_idx
-        if lamp_idx?
-            open_lamp_container(lamp_idx)
+    # $(window).on 'popstate', (e) ->
+    #     lamp_idx = e.originalEvent?.state?.lamp_idx
+    #     if lamp_idx?
+    #         open_lamp_container(lamp_idx)
 
-        old_scroll = e.originalEvent.state?.scrollLeft
-        if old_scroll?
-            $('.lamp_container').show()
-            $('#scroll_container').scrollLeft(old_scroll)
-            $('.nav_container').show()
+    #     old_scroll = e.originalEvent.state?.scrollLeft
+    #     if old_scroll?
+    #         $('.lamp_container').show()
+    #         $('#scroll_container').scrollLeft(old_scroll)
+    #         $('.nav_container').show()
 
     # Resize the window as images load.
     $('.lamp').load () ->
         on_resize()
 
-    # Enable vertical mousewheel input on scroll_container/
+    # Enable vertical mousewheel input on scroll_container
     unless is_mobile # Causes scroll stuttering on mobile.
         $('#scroll_container').mousewheel (event, delta) ->
             if Math.abs(event.deltaY) > Math.abs(event.deltaX)
                 $(@).scrollLeft (@scrollLeft - delta)
 
     # When all images have loaded.
-    # $(window).on "load", () ->
-    #     window.images_loaded = true
+    $(window).on "load", () ->
+        window.images_loaded = true
     #     on_resize()
     #     hash = document.location.pathname
     #     if hash_to_index[hash]?
@@ -93,13 +98,15 @@ $ ->
     $('#image_wrapper').click () -> $(@).hide()
 
     $(document).keyup (e) ->
-
-        # Use escape to quit.
-        $('#image_wrapper').hide() if e.keyCode == 27 # escape
+        ### Use escape to exit image view.
+        ###
+        escape_key = 27
+        $('#image_wrapper').hide() if e.keyCode == escape_key
 
         if $('#image_wrapper').is(":visible")
 
-            # Use arrows to move images.
+            ### Use arrows to move images.
+            ###
 
             if e.keyCode == 37 #Left
                 current_open_image -= 1
@@ -111,6 +118,8 @@ $ ->
 
             open_image($('img.lamp').eq(current_open_image))
 
+    # Arrows keys should rotate through images when image view is open,
+    # prevent moving scroll as well.
     $(document).keydown (e) ->
         if $('#image_wrapper').is(":visible")
             e.preventDefault()
@@ -142,16 +151,16 @@ open_lamp_container = (i) ->
 
 # close_lamp_container = (scroll_position) ->
 
-name_to_path = (name) ->
-    name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase()
+# name_to_path = (name) ->
+#     name.replace(/\ /gi, "_").replace(/#/gi,"").toLowerCase()
 
 on_scroll = () ->
     return unless window.images_loaded
 
     make_active = (i) ->
-        # console.log i, index_to_hash[i]
+        console.log i, index_to_hash[i]
         $td = $('.nav_menu').find('td').eq(i)
-        # window.location.hash = index_to_hash[i]
+        window.location.hash = index_to_hash[i]
         $('.active').removeClass 'active'
         $td.addClass('active')
 
@@ -188,15 +197,37 @@ move_scroll_to = (i) ->
     $('#scroll_container').scrollLeft(scroll_amount + x)
 
 on_resize = () ->
+    window_height = window.innerHeight
+    # window_width =
+    lamp_container_height_percent = .6
+    # footer_height = '20vh'
+
     $('.lamp_container').each (i) ->
-        height = $(@).height()
-
-        margin_top = ((window.innerHeight - height) / 2) - $('#scroll_container').position().top
-
+        ### Vertically center each lamp_container element.
+        ###
+        container_height = $(@).height()
+        scroll_top = $('#scroll_container').position().top
+        margin_top = ((window_height - container_height) / 2) - scroll_top
         $(@).css 'margin-top', margin_top
 
+        ### The element is transalted by 0 degrees - so .width() is screen height.
+        ###
         name = $(@).find('a.lamp_name.vertical-text')
+        name.css 'margin-top', (container_height - name.width()) / 2
 
-        # The element is transalted by 0 degrees - so .width() is screen height.
-        name.css 'margin-top', (height - name.width()) / 2
+    ### Vertically center the header.
+    ###
+    $header = $('#header')
+    header_height = $header.height()
+    header_space  = window_height * ( 1 - lamp_container_height_percent) / 2
+    $header.css('margin-top', Math.max((header_space - header_height) / 4), 0)
+
+    ### Vertically center the footer.
+    ###
+    $footer = $('#footer')
+    footer_height = $footer.height()
+    footer_space  = window_height * ( 1 - lamp_container_height_percent) / 2
+    $footer.css('bottom', (footer_space - footer_height) / 2)
+
+
 

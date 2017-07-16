@@ -26,12 +26,7 @@ body {
 }
 
 h1, h2, h3, h4, a {
-  font-weight: lighter;
-}
-
-
-#header h1 {
-  font-size: 36px;
+  /*font-weight: lighter;*/
 }
 
 #scroll_container {
@@ -70,13 +65,14 @@ HEADER
   width: 100%;
   left: 0px;
   z-index: 2;
-  margin-top: 2vh;
+  /*margin-top: 2vh;*/
 }
 
 #header h1 {
+  font-size: 42px;
   display: block;
   text-align: center;
-  cursor: pointer;
+  /*cursor: pointer;*/
   margin: 0px;
 }
 
@@ -85,14 +81,16 @@ h2 {
   right: 5vw;
 }
 
-h2 a {
+h2.about a {
   color: black;
   text-decoration: none;
+  /*border-bottom: 1px solid black;*/
+}
+h2.about {
+  /*margin-top: 0px;*/
+  /*margin-bottom: 0px;*/
 }
 
-h2 a:hover {
-  border-bottom: 1px solid black;
-}
 
 /*
 HEADER
@@ -139,9 +137,9 @@ HEADER
 }
 
 .lamp {
-  max-width: 80vw;
-  padding-right: 10px;
-  max-height: 50vh;
+  max-width: 100vw;
+  padding-right: 50px;
+  max-height: 60vh;
   vertical-align: middle;
 }
 
@@ -161,7 +159,7 @@ img.lamp {
 #footer {
   width: 100%;
   position: absolute;
-  bottom: 8vh;
+  /*bottom: 8vh;*/
   left: 0px;
 }
 
@@ -170,7 +168,7 @@ table.nav_menu {
 }
 
 td {
-  padding-right: 50px;
+  padding-right: 40px;
 }
 
 td:last-of-type {
@@ -248,7 +246,7 @@ a:hover, #footer a:hover {
     h2.about {
       position: static;
       font-size: 3em;
-      margin-top: 25px;
+      /*margin-top: 25px;*/
     }
 
     #footer a {

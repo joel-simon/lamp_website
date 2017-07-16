@@ -1,6 +1,6 @@
 mixin lamp_content(lamp)
 
-    .lamp_container(data-name="#{lamp.name}")
+    .lamp_container(data-name="#{lamp.name}", data-path="#{lamp.path}")
 
         a.lamp_name.vertical-text() #{lamp.name}
 

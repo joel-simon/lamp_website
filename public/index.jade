@@ -8,14 +8,16 @@ html
         script(src='/libs/jquery-mousewheel.min.js')
 
         script(src='/src/main.js')
+        script(src='/src/google_analytics.js')
 
         link(rel='stylesheet', href='/style/main.css')
     body
         #header(style="text-align: center;")
             .horizontally_centered(style="display: inline-block")
-                h1.hover_underline Simon Lamps
+                h1 Simon Lamps
 
-            h2.about: a(href="/about.html") more
+                h2.about: a(href="/about.html") more
+                //- a.about(href="/about.html") more
 
         #scroll_container
             for lamp in public._data

@@ -9,6 +9,10 @@ body {
   overflow: visible;
 }
 
+#header h1 {
+  margin-top: 2vh;
+}
+
 .column_container2 {
   display: inline-block;
   width: 100%;
@@ -63,6 +67,8 @@ body {
 */
 p {
   margin: 0px;
+  font-size: 1.7em;
+  /*font-weight: 400;*/
   text-align: justify;
 }
 
@@ -153,7 +159,7 @@ canvas {
 /* ----------- iPhone 5 & 6 ----------- */
 
 /* Portrait and Landscape */
-@media only screen
+/*@media only screen
   and (min-device-width: 320px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
@@ -164,7 +170,7 @@ canvas {
     font-size: 3em;
   }
 }
-
+*/
 
 /* Portrait */
 @media only screen
