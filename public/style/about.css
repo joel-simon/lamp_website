@@ -67,9 +67,13 @@ body {
 */
 p {
   margin: 0px;
-  font-size: 2.0em;
-  /*font-weight: 400;*/
+  font-size: 1.3em;
+  /*font-weight: bold;*/
   text-align: justify;
+}
+
+h1, h2, h3 {
+  font-size: 1.5em;
 }
 
 /*#header {
@@ -85,55 +89,22 @@ h1,  h2,  h3,  h4, .column > p {
   padding-bottom: 0px;
 }
 
-.materials h2 {
-  margin-bottom: 0px;
-}
-/*#model_scroll_container {
-  position: absolute;
-  height: 700px;
-  width: 80vw;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-  z-index: 2;
-}
 
-#scroll {
-  width: 2000px;
-  height: 100%;
-}
-*/
 #canvas_container {
   position: fixed;
   height: 100vh;
-  /*height: 700px;*/
-  /*min-height: 50vh;*/
-  /*max-height: 100vh;*/
   width: 100vw;
   left: 0px;
   top: 200px;
-  /*background-color: green;*/
-  /*padding-bottom: 40px;*/
 }
 
 canvas {
   position: inherit;
 }
 
-/*#model_scroll_container::-webkit-scrollbar {
-    -webkit-appearance: none;
-    height: 6px;
-}
-
-
-#model_scroll_container::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-}*/
 .column_container.joel_describe {
   width: 100%;
   display: inline-block;
-  /*margin:0 auto;*/
 }
 .joel_describe .left_column {
   width: 50%;
@@ -154,23 +125,25 @@ canvas {
 
 }
 
-
+.joel_links {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
 
 /* ----------- iPhone 5 & 6 ----------- */
 
 /* Portrait and Landscape */
-/*@media only screen
+@media only screen
   and (min-device-width: 320px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
-  h1, h2, h3, h4 {
-    font-size: 2em;
+  p, h1, h2 {
+    font-weight: lighter;
   }
-  p, h2, h4 {
-    font-size: 3em;
-  }
+
 }
-*/
+
 
 /* Portrait */
 @media only screen
@@ -199,24 +172,3 @@ canvas {
     }
   }
 
-/*@media all and (min-width: 50px)   {  p, h1, h2, h3, h4  { font-size:2em;  } }*/
-/*@media all and (min-width: 100px)  {  p, h2, h3, h4  { font-size:0.3em;  } }*/
-/*@media all and (min-width: 200px)  {  p, h1, h2, h3, h4  { font-size:0.6em;  } }
-@media all and (min-width: 300px)  {  p, h1, h2, h3, h4  { font-size:0.9em;  } }
-@media all and (min-width: 400px)  {  p, h1, h2, h3, h4  { font-size:0.12em;  } }
-@media all and (min-width: 500px)  {  p, h1, h2, h3, h4  { font-size:1.5em;  } }
-@media all and (min-width: 600px)  {  p, h1, h2, h3, h4  { font-size:1.8em;  } }
-*//*@media all and (min-width: 700px)  {  p, h2, h3, h4  { font-size:1.4em;  } }*/
-/*@media all and (min-width: 800px)  {  p, h2, h3, h4  { font-size:1.6em;  } }*/
-
-/*@media all and (min-width: 900px)  {  p, h2, h3, h4  { font-size:1.8em;  } }*/
-/*@media all and (min-width: 1000px) {  p, h2, h3, h4  { font-size:2.0em;  } }*/
-/*@media all and (min-width: 1100px) {  p  { font-size:2.2em;  } }
-@media all and (min-width: 1200px) {  p  { font-size:2.4em;  } }
-@media all and (min-width: 1300px) {  p  { font-size:2.6em;  } }
-@media all and (min-width: 1400px) {  p  { font-size:2.8em;  } }
-@media all and (min-width: 1500px) {  p  { font-size:3.0em;  } }
-@media all and (min-width: 1500px) {  p  { font-size:3.2em;  } }
-@media all and (min-width: 1600px) {  p  { font-size:3.4em;  } }
-@media all and (min-width: 1700px) {  p  { font-size:3.6em;  } }
-*/

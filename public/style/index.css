@@ -1,8 +1,8 @@
-@font-face {
-  font-family: Avenir;
-  font-weight: lighter;
-  src: url("fonts/avenirnext-ultralight.ttf") format("truetype");
-}
+/*@font-face {*/
+  /*font-family: Avenir;*/
+  /*font-weight: lighter;*/
+  /*src: url("fonts/avenirnext-ultralight.ttf") format("truetype");*/
+/*}*/
 
 /*@font-face {
   font-family: Foo;
@@ -10,25 +10,35 @@
   src: url("fonts/AvenirLTStd-Light.otf") format("opentype");
 }
 */
-html {
+html, body {
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  height: 100%;
-  overflow: hidden;
   margin: 0;
 }
 
 * {
   font-family: 'Avenir', sans-serif;
+  font-weight: normal;
 }
 
-h1, h2, h3, h4, a {
+h1, h2, h3, h4 {
   /*font-weight: lighter;*/
 }
 
+p, h2, a {
+  /*font-weight: 500;*/
+}
+#content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
 #scroll_container {
   position: absolute;
   top: 0;
@@ -81,14 +91,26 @@ h2 {
   right: 5vw;
 }
 
-h2.about a {
+h2 a {
   color: black;
   text-decoration: none;
-  /*border-bottom: 1px solid black;*/
+  border-bottom: 1px solid gray;
+  /*https://stackoverflow.com/questions/10838223/webkit-renders-last-px-of-border1px-dotted-oddly*/
+  /*border-right: 2px solid transparent;*/
+  /*border-left: 2px solid transparent;*/
 }
-h2.about {
-  /*margin-top: 0px;*/
-  /*margin-bottom: 0px;*/
+
+
+/*.hover_underline {
+  border-bottom: 1px solid transparent;
+}
+
+.hover_underline:hover {
+  border-bottom: 1px solid black;
+}*/
+
+h2 a:hover {
+  border-bottom: 2px solid black;
 }
 
 
@@ -152,14 +174,13 @@ img.lamp {
 }
 
 /*
-  Footer.
+  Footer Navigation.
 */
 
 
 #footer {
   width: 100%;
   position: absolute;
-  /*bottom: 8vh;*/
   left: 0px;
 }
 
@@ -182,7 +203,7 @@ td img {
 }
 
 td img:hover {
-  border-bottom: 2px solid gray;
+  border-bottom: 1px solid gray;
 }
 
 td.active img {
@@ -203,17 +224,6 @@ td.active img {
   position: absolute;
 }
 
-.hover_underline {
-  border-bottom: 1px solid transparent;
-}
-
-.hover_underline:hover {
-  border-bottom: 1px solid black;
-}
-
-a:hover, #footer a:hover {
-  border-bottom: 1px solid black;
-}
 
 /* ----------- iPhone 5 & 6 ----------- */
 
@@ -222,6 +232,17 @@ a:hover, #footer a:hover {
   and (min-device-width: 320px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
+
+    /* For some reason these get very thick on mobile otherwise. */
+    h1, h2, h3, h4 {
+      font-weight: lighter;
+    }
+
+    h2.more {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
     td img:hover {
       border-bottom: 2px solid transparent;
     }
@@ -246,7 +267,12 @@ a:hover, #footer a:hover {
     h2.about {
       position: static;
       font-size: 3em;
-      /*margin-top: 25px;*/
+    }
+
+    h2.more {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      font-size: 4em;
     }
 
     #footer a {

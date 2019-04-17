@@ -14,13 +14,22 @@
         ]
     },
     {
+        "name": "Okawara Desk - 4",
+        "path": "desk_4",
+        "icon": "desk-4/icon.png",
+        "images": [
+            "desk-4/DSCF4126.jpg",
+            "desk-4/DSCF4376.jpg"
+        ]
+    },
+    {
         "name": "Okawara Desk - 2",
         "path": "desk_2",
         "icon": "desk-2/icon.png",
         "images": [
-            "desk-2/IMG_5104.jpg",
             "desk-2/IMG_5105.jpg",
-            "desk-2/IMG_5113.jpg"
+            "desk-2/DSCF4329.jpg",
+            "desk-2/IMG_5104.jpg"
         ]
     },
     {
@@ -42,11 +51,9 @@
         "lead": "desk-1/screenshot.png",
         "model": "3d/desk0.obj",
         "images": [
-            "desk-1/IMG_4911.jpg",
-            "desk-1/IMG_4913.jpg",
-            "desk-1/IMG_4917.jpg",
-            "desk-1/IMG_4921.jpg",
-            "desk-1/IMG_4923.jpg"
+            "desk-1/DSCF4395.jpg",
+            "desk-1/DSCF4294.jpg",
+            "desk-1/DSCF4181.jpg"
         ]
     },
     {
@@ -59,6 +66,17 @@
             "table-2/IMG_5122.jpg",
             "table-2/IMG_5130.jpg",
             "table-2/IMG_5124.jpg"
+        ]
+    },
+    {
+        "name": "Plant Lamp",
+        "path": "desk-3",
+        "icon": "desk-3/icon1.png",
+        "images": [
+            "desk-3/IMG_5435.jpg",
+            "desk-3/IMG_5451.jpg",
+            "desk-3/IMG_5464.jpg",
+            "desk-3/IMG_5446.jpg"
         ]
     }
 ]

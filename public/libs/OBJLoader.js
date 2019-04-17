@@ -43,7 +43,7 @@ THREE.OBJLoader.prototype = {
 
 	parse: function ( text ) {
 
-		console.time( 'OBJLoader' );
+		// console.time( 'OBJLoader' );
 
 		var objects = [];
 		var object;

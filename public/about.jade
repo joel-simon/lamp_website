@@ -3,15 +3,14 @@ doctype html
 html
     head
         script(src='/libs/jquery.js')
-        //- script(src='/libs/jquery-mousewheel.min.js')
         script(src='/libs/three.min.js')
         script(src='/libs/OBJLoader.js')
         script(src='/libs/tween.js')
 
-        script(src='/src/model_viewer.js')
+        script(src='/src/about.js')
         script(src='/src/google_analytics.js')
 
-        link(rel='stylesheet', href='/style/main.css')
+        link(rel='stylesheet', href='/style/index.css')
         link(rel='stylesheet', href='/style/about.css')
     body
 
@@ -19,7 +18,7 @@ html
             .horizontally_centered(style="display: inline-block")
                 h1 About
 
-            h2.about: a(href="/index.html") main
+            h2.main: a(href="/index.html") main
 
         .section(style="padding-bottom:0px;")
             p(style='text-align:center;').
@@ -33,44 +32,48 @@ html
             .column_container2.materials
                 .top
                     .column2.left
-                        h2 Cherry Wood
+                        h1 Cherry Wood
                         img(src='/imgs/cherry.jpg')
-                        p Cherry Wood has a rich pink to mild-red color that pairs well with warm colored papers. Smaller lamps use laminated veneer and larger ones use hardwood. The veneer is steam bent; however, the solid hardwood requires a method of 'Extreme Wood Bending' to allow tight curves of pieces up to .5" thick.
+                        p Cherry has a rich pinkish red color that compliments warm colored papers. Some lamps use laminated veneer and others use hardwood. The veneer is steam bent while the thicker hardwood requires a method called 'Extreme Wood Bending' to create tight curves.
 
                     .column2.right
-                        h2 Washi Paper
+                        h1 Washi Paper
                         img(src='/imgs/washi.jpg')
-                        p Washi paper called Okawara has subtle and warm natural colors that balance with cherry wood and white walls. Both handmade and machine made Okawara papers are used. Okawara Paper is made of kozo fibers and sulfite.
+                        p A Washi paper called Okawara has subtle and warm natural colors that balance with cherry wood and white walls. Both handmade and machine made Okawara papers are used. Okawara Paper is made of kozo fibers and sulfite.
 
                 .column2.left
-                    h2 LED's
+                    h1 LED's
                     img(src='/imgs/leds.jpg')
-                    p LED strips are used in all lamps. LED's are a long lasting, energy-efficient lighting method that can last up to 50,000 hours - 42 times longer than incandescent bulbs and 13 times longer than halogen bulbs. They are key to the design as they allow the boxes to be evenly lit.
+                    p LED strips are used in all lamps. LED's are a long lasting, energy-efficient lighting method that can last up to 50,000 hours - 42 times longer than incandescent bulbs and 13 times longer than halogen bulbs. They allow the boxes to be evenly lit.
 
 
                 .column2.right
-                    h2 Acrylic
+                    h1 Acrylic
                     img(src='/imgs/acrylic.jpg')
-                    p Polished acrylic boxes, such as those used in museum display cases, provide the structure and shape of the box and prevent the paper from ripping or tearing. Paper is attached directly to the outside. Polished edges ensure even transparency throughout.
+                    p Polished acrylic boxes, often used in museum display cases, provide the structure and shape of the box and prevent the paper from ripping or tearing. Paper is attached directly to the outside. Polished edges ensure even transparency throughout.
 
         .section.about
             h1 About
             .derp
                 p.
-                    My interest in lamps grew out of an admiration for geometric mid-century architecture and Japanese woodworking and architecture. Buildings such as Lincon Center as well as the Museum of Modern Art Fort Worth pair stone, concrete and glass to create strikingly sculptural glowing forms. These lamps aspire to similar harmonies of open-closed and static-dynamic forms. For simplicity, all lamps are restricted to a box and curve(s). The box is the mass while the supporting curve provides the movement and energy. The material of the box is is light and airy while the curve is solid. The box is static while the curve is dynamic. The form is geometric while the materials are warm and natural.
+                    My interest in lamps grew out of an admiration for  mid-century and Japanese architecture. Buildings such as Lincon Center as well as the Museum of Modern Art Fort Worth pair stone, concrete and glass to create strikingly sculptural and glowing geometric forms. These lamps aspire to similar harmonies of open-closed and static-dynamic. For simplicity, all lamps are restricted to a box and curve(s). The box is the mass while the supporting curve provides the movement and energy. The material of the box is light and airy while the curve is solid. The box is static while the curve is dynamic. The form is geometric while the materials are warm and natural.
 
         .section.who
             h1 Joel Simon
             .column_container.joel_describe
                 .left_column
                     p.
-                        Joel Simon currently lives in New York City. He currently does bioinformatic analysis Rockefeller University. His other interests include figure sculpture, computational sculpture and evolutionary design.
+                        Joel Simon currently lives in New York City. His other interests include figure sculpture, computational sculpture and evolutionary design.
+
+                    .joel_links
+                        h2: a(href="http://joelsimon.net", target="_blank") joelsimon.net
+                        h2: a(href="mailto:joelsimon6@gmail.com?Subject=Lamps" target="_blank") Contact
 
                 .right_column
-                    img.right_column(src='imgs/lamp_me.jpg')
+                    img(src='imgs/lamp_me2.jpg', style='width:70%;')
 
         #about_footer(style="padding-bottom:50px")
-            .links(style="text-align: center;")
-                h2: a(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
-                h2: a(href="http://joelsimon.net", target="_blank") Other Work By Joel
+            //- .links(style="text-align: center;")
+            //-     h2: a(href="mailto:joelsmon6@gmail.com?Subject=Lamps" target="_blank") Contact
+            //-     h2: a(href="http://joelsimon.net", target="_blank") Other Work By Joel
 
