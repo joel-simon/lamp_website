@@ -1,4 +1,6 @@
-public/imgs/
 config.json
 archive/
 www/
+lamp-sveltekit/
+.DS_Store
+node_modules/

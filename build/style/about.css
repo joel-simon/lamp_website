@@ -1,0 +1,174 @@
+html {
+  width: 100%;
+  overflow: visible;
+}
+
+
+body {
+  width: 100%;
+  overflow: visible;
+}
+
+#header h1 {
+  margin-top: 2vh;
+}
+
+.column_container2 {
+  display: inline-block;
+  width: 100%;
+  /*display: flex;*/
+}
+.column2 {
+  box-sizing: border-box;
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 50%;
+  height: 50%;
+}
+.top {
+  display: inline-block;
+}
+.column2.left {
+  float: left;
+}
+.column2.right {
+  float: right;
+}
+
+.column-left{ float: left; width: 33%; }
+.column-right{ float: right; width: 33%; }
+.column-center{ display: inline-block; width: 33%; }
+
+.column_container {
+    /*height: 700px*/;
+    position: relative;
+    /*background-color: green;*/
+}
+
+.section {
+  padding-bottom: 40px;
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+.section.materials .column {
+  position: relative;
+}
+
+.section.materials img {
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+/*.links a {
+  padding-bottom: 20px;
+}
+*/
+p {
+  margin: 0px;
+  font-size: 1.3em;
+  /*font-weight: bold;*/
+  text-align: justify;
+}
+
+h1, h2, h3 {
+  font-size: 1.5em;
+}
+
+/*#header {
+    position: relative;
+}*/
+
+h1,  h2,  h3,  h4, .column > p {
+  text-align: center;
+}
+
+.section.models {
+  height: 3000px;
+  padding-bottom: 0px;
+}
+
+
+#canvas_container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0px;
+  top: 200px;
+}
+
+canvas {
+  position: inherit;
+}
+
+.column_container.joel_describe {
+  width: 100%;
+  display: inline-block;
+}
+.joel_describe .left_column {
+  width: 50%;
+  float: left;
+}
+
+.right_column {
+  width: 50%;
+  float: right;
+}
+
+.right_column img {
+  display:block;
+  margin:auto;
+  float: initial; /* overwrite parent float:right*/
+  /*width: 50%;*/
+  max-width: 50vw;
+
+}
+
+.joel_links {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/* ----------- iPhone 5 & 6 ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+  p, h1, h2 {
+    font-weight: lighter;
+  }
+
+}
+
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+    .column2 {
+      width: initial;
+      height: initial;
+    }
+    .joel_describe .left_column {
+      width: initial;
+    }
+    .joel_describe .right_column {
+      width: 100%;
+    }
+}
+
+/* Portrait */
+@media only screen
+  and (max-width: 667px){
+    .column2 {
+      width: initial;
+      height: initial;
+    }
+  }
+

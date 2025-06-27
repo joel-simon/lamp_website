@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build": "harp ./public ./build",
+    "dev": "harp public"
+  },
+  "dependencies": {
+    "harp": "^0.46.1"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.7.0"
+  }
+}
