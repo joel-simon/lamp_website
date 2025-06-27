@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "harp ./public ./build",
+    "build": "harp ./public ./docs",
     "dev": "harp public"
   },
   "dependencies": {
